@@ -2,9 +2,9 @@
 
 namespace Application\Providers;
 
-use IAuthService;
 use App\Http\Services\AuthService;
 use Illuminate\Support\ServiceProvider;
+use Application\Interfaces\Services\IAuthService;
 
 class ServiceInterfaceProvider extends ServiceProvider
 {

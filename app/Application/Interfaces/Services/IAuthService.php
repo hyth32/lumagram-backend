@@ -1,8 +1,12 @@
 <?php
 
+namespace Application\Interfaces\Services;
+
+use Application\DTOs\Auth\RegisterUserDto;
+
 interface IAuthService
 {
-    public function registerUser(): void;
+    public function registerUser(RegisterUserDto $dto): array;
 
     public function loginUser(): void;
 
