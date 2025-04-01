@@ -1,5 +1,11 @@
 <?php
 
+use Application\Providers\AppServiceProvider;
+use Application\Providers\ServiceInterfaceProvider;
+use Application\Providers\ControllerInterfaceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
+    AppServiceProvider::class,
+    ControllerInterfaceProvider::class,
+    ServiceInterfaceProvider::class,
 ];
