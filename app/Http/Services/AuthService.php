@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\User;
+use Application\DTOs\Auth\LoginUserDto;
 use Illuminate\Support\Facades\Hash;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
@@ -18,12 +19,35 @@ class AuthService implements IAuthService
         ]);
 
         return [
-            'accessToken' => $user->createAccessToken(),
-            'refreshToken' => $user->createRefreshToken(),
+            'success' => true,
+            'data' => [
+                'accessToken' => $user->createAccessToken(),
+                'refreshToken' => $user->createRefreshToken(),
+            ],
         ];
     }
 
-    public function loginUser(): void {}
+    public function loginUser(LoginUserDto $dto): array
+    {
+        $user = User::where('username', $dto->username)->first();
+        
+        if (!Hash::check($dto->password, $user->password)) {
+            return [
+                'success' => false,
+                'error' => 'Invalid credentials',
+            ];
+        }
+
+        $user->tokens()->delete();
+
+        return [
+            'success' => true,
+            'data' => [
+                'accessToken' => $user->createAccessToken(),
+                'refreshToken' => $user->createRefreshToken(),
+            ],
+        ];
+    }
 
     public function logoutUser(): void {}
     

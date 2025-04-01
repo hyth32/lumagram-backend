@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\RegisterUserRequest;
 use Application\Interfaces\Controllers\IAuthController;
+use Application\Requests\Auth\LoginUserRequest;
 
 class AuthController implements IAuthController
 {
@@ -21,15 +23,18 @@ class AuthController implements IAuthController
             password: $request->input('password')
         );
 
-        $data = $this->authService->registerUser($dto);
-
-        return [
-            'success' => true,
-            'data' => $data,
-        ];
+        return $this->authService->registerUser($dto);
     }
 
-    public function login(): void {}
+    public function login(LoginUserRequest $request): array
+    {
+        $dto = new LoginUserDto(
+            username: $request->input('username'),
+            password: $request->input('password'),
+        );
+
+        return $this->authService->loginUser($dto);
+    }
 
     public function logout(): void {}
 
