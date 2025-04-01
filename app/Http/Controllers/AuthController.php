@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Application\DTOs\Auth\RegisterUserDto;
-use Application\Requests\RegisterUserRequest;
 use Application\Interfaces\Services\IAuthService;
+use Application\Requests\Auth\RegisterUserRequest;
 use Application\Interfaces\Controllers\IAuthController;
 
 class AuthController implements IAuthController

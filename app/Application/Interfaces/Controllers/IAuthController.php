@@ -2,7 +2,7 @@
 
 namespace Application\Interfaces\Controllers;
 
-use Application\Requests\RegisterUserRequest;
+use Application\Requests\Auth\RegisterUserRequest;
 
 interface IAuthController
 {
