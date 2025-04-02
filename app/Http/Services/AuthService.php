@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use Application\DTOs\Auth\LoginUserDto;
 use Illuminate\Support\Facades\Password;
@@ -77,7 +76,7 @@ class AuthService implements IAuthService
     public function resetUserPassword(ResetPasswordRequest $request): array
     {
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            $request->only('email', 'password', 'token'),
             function (User $user) use ($request) {
                 $user->forceFill([
                     'password' => Hash::make($request->password)
