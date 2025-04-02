@@ -14,7 +14,7 @@ interface IAuthController
 
     public function logout(Request $request): void;
 
-    public function resetPassword(): void;
+    public function resetPassword(Request $request): array;
 
     public function refresh(): void;
 }

@@ -39,6 +39,15 @@ class AuthService implements IAuthService
             ];
         }
 
+        if ($user->hasPasswordChangeMark()) {
+            return [
+                'success' => true,
+                'data' => [
+                    'password_reset' => true,
+                ],
+            ];
+        }
+
         $user->tokens()->delete();
 
         return [
@@ -55,7 +64,12 @@ class AuthService implements IAuthService
         $request->user()->tokens()->delete();
     }
     
-    public function resetUserPassword(): void {}
+    public function resetUserPassword(Request $request): array
+    {
+        $request->user()->markPasswordChange();
+
+        return ['success' => true];
+    }
 
     public function refreshAccessToken(): void {}
 }

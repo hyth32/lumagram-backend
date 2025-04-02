@@ -17,6 +17,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'password_reset',
     ];
 
     protected $hidden = [
@@ -44,5 +45,15 @@ class User extends Authenticatable
     public function createRefreshToken(): string
     {
         return $this->createToken('refresh-token', ['*'], Carbon::now()->addWeek())->plainTextToken;
+    }
+
+    public function markPasswordChange(): void
+    {
+        $this->update(['password_reset' => true]);
+    }
+
+    public function hasPasswordChangeMark(): bool
+    {
+        return $this->password_reset === true;
     }
 }
