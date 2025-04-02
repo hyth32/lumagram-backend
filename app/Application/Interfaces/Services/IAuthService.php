@@ -14,7 +14,7 @@ interface IAuthService
 
     public function logoutUser(Request $request): void;
 
-    public function resetUserPassword(Request $request): array;
+    public function resetUserPassword(): void;
 
     public function forgotPassword(string $email): array;
 
