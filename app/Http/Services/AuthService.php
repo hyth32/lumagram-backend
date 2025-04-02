@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
-
+use Application\Requests\Auth\ResetPasswordRequest;
 class AuthService implements IAuthService
 {
     public function registerUser(RegisterUserDto $dto): array
@@ -63,7 +63,7 @@ class AuthService implements IAuthService
         return ['success' => $status === Password::RESET_LINK_SENT];
     }
     
-    public function resetUserPassword(Request $request): array
+    public function resetUserPassword(ResetPasswordRequest $request): array
     {
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),

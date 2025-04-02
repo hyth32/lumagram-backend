@@ -4,6 +4,7 @@ namespace Application\Interfaces\Services;
 
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
+use Application\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Http\Request;
 
 interface IAuthService
@@ -14,7 +15,7 @@ interface IAuthService
 
     public function logoutUser(Request $request): void;
 
-    public function resetUserPassword(): void;
+    public function resetUserPassword(ResetPasswordRequest $request): array;
 
     public function forgotPassword(string $email): array;
 
