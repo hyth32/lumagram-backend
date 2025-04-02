@@ -19,5 +19,5 @@ interface IAuthService
 
     public function forgotPassword(string $email): array;
 
-    public function refreshAccessToken(): void;
+    public function refreshAccessToken(Request $request): array;
 }

@@ -20,5 +20,5 @@ interface IAuthController
 
     public function forgotPassword(ForgotPasswordRequest $request): array;
 
-    public function refresh(): void;
+    public function refresh(Request $request): array;
 }

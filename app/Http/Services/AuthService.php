@@ -87,5 +87,16 @@ class AuthService implements IAuthService
         return ['success' => $status === Password::PASSWORD_RESET];
     }
 
-    public function refreshAccessToken(): void {}
+    public function refreshAccessToken(Request $request): array
+    {
+        $user = $request->user();
+        $user->tokens()->where('name', '=', 'access-token')->delete();
+
+        return [
+            'success' => true,
+            'data' => [
+                'accessToken' => $user->createAccessToken(),
+            ],
+        ];
+    }
 }

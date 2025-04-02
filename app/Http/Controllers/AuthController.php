@@ -54,5 +54,8 @@ class AuthController implements IAuthController
         return $this->authService->forgotPassword($request->input('email'));
     }
 
-    public function refresh(): void {}
+    public function refresh(Request $request): array
+    {
+        return $this->authService->refreshAccessToken($request);
+    }
 }
