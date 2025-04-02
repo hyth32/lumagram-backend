@@ -6,6 +6,7 @@ use App\Models\User;
 use Application\DTOs\Auth\LoginUserDto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
 
@@ -39,15 +40,6 @@ class AuthService implements IAuthService
             ];
         }
 
-        if ($user->hasPasswordChangeMark()) {
-            return [
-                'success' => true,
-                'data' => [
-                    'password_reset' => true,
-                ],
-            ];
-        }
-
         $user->tokens()->delete();
 
         return [
@@ -63,12 +55,26 @@ class AuthService implements IAuthService
     {
         $request->user()->tokens()->delete();
     }
+
+    public function forgotPassword(string $email): array
+    {
+        $status = Password::sendResetLink(['email' => $email]);
+
+        return ['success' => $status === Password::RESET_LINK_SENT];
+    }
     
     public function resetUserPassword(Request $request): array
     {
-        $request->user()->markPasswordChange();
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($request->password)
+                ])->save();
+            }
+        );
 
-        return ['success' => true];
+        return ['success' => $status === Password::PASSWORD_RESET];
     }
 
     public function refreshAccessToken(): void {}

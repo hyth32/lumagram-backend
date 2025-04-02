@@ -46,14 +46,4 @@ class User extends Authenticatable
     {
         return $this->createToken('refresh-token', ['*'], Carbon::now()->addWeek())->plainTextToken;
     }
-
-    public function markPasswordChange(): void
-    {
-        $this->update(['password_reset' => true]);
-    }
-
-    public function hasPasswordChangeMark(): bool
-    {
-        return $this->password_reset === true;
-    }
 }

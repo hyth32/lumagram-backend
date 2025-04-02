@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
-use Application\Requests\Auth\RefreshTokenRequest;
 use Application\Requests\Auth\RegisterUserRequest;
 use Application\Interfaces\Controllers\IAuthController;
 use Application\Requests\Auth\LoginUserRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
+use Application\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Http\Request;
 
 class AuthController implements IAuthController
@@ -40,13 +41,18 @@ class AuthController implements IAuthController
 
     public function logout(Request $request): void
     {
-        return $this->authService->logoutUser($request);
+        $this->authService->logoutUser($request);
     }
 
-    public function resetPassword(Request $request): array
+    public function resetPassword(ResetPasswordRequest $request): array
     {
         return $this->authService->resetUserPassword($request);
     }
 
     public function refresh(): void {}
+
+    public function forgotPassword(ForgotPasswordRequest $request): array
+    {
+        return $this->authService->forgotPassword($request->input('email'));
+    }
 }
