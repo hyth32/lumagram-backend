@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\User;
 use Application\DTOs\Auth\LoginUserDto;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
@@ -49,7 +50,10 @@ class AuthService implements IAuthService
         ];
     }
 
-    public function logoutUser(): void {}
+    public function logoutUser(Request $request): void
+    {
+        $request->user()->tokens()->delete();
+    }
     
     public function resetUserPassword(): void {}
 

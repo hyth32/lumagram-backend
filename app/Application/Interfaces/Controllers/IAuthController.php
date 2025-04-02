@@ -4,6 +4,7 @@ namespace Application\Interfaces\Controllers;
 
 use Application\Requests\Auth\LoginUserRequest;
 use Application\Requests\Auth\RegisterUserRequest;
+use Illuminate\Http\Request;
 
 interface IAuthController
 {
@@ -11,7 +12,7 @@ interface IAuthController
     
     public function login(LoginUserRequest $request): array;
 
-    public function logout(): void;
+    public function logout(Request $request): void;
 
     public function resetPassword(): void;
 
