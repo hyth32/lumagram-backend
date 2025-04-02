@@ -7,11 +7,12 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasUuids, SoftDeletes, HasApiTokens;
+    use HasUuids, SoftDeletes, HasApiTokens, Notifiable;
 
     protected $fillable = [
         'username',

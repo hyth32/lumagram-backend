@@ -3,13 +3,16 @@
 namespace App\Http\Services;
 
 use App\Models\User;
-use Application\DTOs\Auth\LoginUserDto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
+use Application\DTOs\Auth\LoginUserDto;
 use Illuminate\Support\Facades\Password;
 use Application\DTOs\Auth\RegisterUserDto;
+use App\Notifications\ResetPasswordNotification;
 use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\ResetPasswordRequest;
+
 class AuthService implements IAuthService
 {
     public function registerUser(RegisterUserDto $dto): array
@@ -58,7 +61,15 @@ class AuthService implements IAuthService
 
     public function forgotPassword(string $email): array
     {
-        $status = Password::sendResetLink(['email' => $email]);
+        $status = Password::sendResetLink(
+            ['email' => $email],
+            function (User $user) {
+                $token = Password::createToken($user);
+                $url = config('app.frontend_url') . '/reset-password?token=' . $token;
+                
+                $user->notify(new ResetPasswordNotification($url));
+            }
+        );
 
         return ['success' => $status === Password::RESET_LINK_SENT];
     }
