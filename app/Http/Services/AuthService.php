@@ -24,10 +24,7 @@ class AuthService implements IAuthService
 
         return [
             'success' => true,
-            'data' => [
-                'accessToken' => $user->createAccessToken(),
-                'refreshToken' => $user->createRefreshToken(),
-            ],
+            'data' => $user->createTokens(),
         ];
     }
 
@@ -42,14 +39,9 @@ class AuthService implements IAuthService
             ];
         }
 
-        $user->tokens()->delete();
-
         return [
             'success' => true,
-            'data' => [
-                'accessToken' => $user->createAccessToken(),
-                'refreshToken' => $user->createRefreshToken(),
-            ],
+            'data' => $user->createTokens($dto->remember_me),
         ];
     }
 

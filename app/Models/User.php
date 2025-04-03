@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -39,11 +38,20 @@ class User extends Authenticatable
 
     public function createAccessToken(): string
     {
-        return $this->createToken('access-token', ['*'], Carbon::now()->addHour())->plainTextToken;
+        return $this->createToken('access-token', ['*'], now()->addHour())->plainTextToken;
     }
 
     public function createRefreshToken(): string
     {
-        return $this->createToken('refresh-token', ['*'], Carbon::now()->addWeek())->plainTextToken;
+        return $this->createToken('refresh-token', ['*'], now()->addWeek())->plainTextToken;
+    }
+
+    public function createTokens($rememberMe = false): array
+    {
+        return [
+            'accessToken' => $this->createAccessToken(),
+            'refreshToken' => $this->createRefreshToken(),
+            'expirationDate' => $rememberMe ? now()->addWeek() : null,
+        ];
     }
 }

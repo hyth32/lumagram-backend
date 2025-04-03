@@ -16,6 +16,7 @@ class LoginUserRequest extends FormRequest
         return [
             'username' => 'required|string|exists:users,username',
             'password' => 'required|string',
+            'rememberMe' => 'required|boolean',
         ];
     }
 }

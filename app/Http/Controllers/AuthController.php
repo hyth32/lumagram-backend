@@ -34,6 +34,7 @@ class AuthController implements IAuthController
         $dto = new LoginUserDto(
             username: $request->input('username'),
             password: $request->input('password'),
+            remember_me: $request->input('rememberMe'),
         );
 
         return $this->authService->loginUser($dto);
