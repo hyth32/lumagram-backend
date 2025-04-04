@@ -11,4 +11,9 @@ class UserProfile extends Model
         'description',
         'activity_category',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
