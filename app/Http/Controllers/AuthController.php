@@ -12,7 +12,7 @@ use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Http\Request;
 
-class AuthController implements IAuthController
+class AuthController extends Controller implements IAuthController
 {
     public function __construct(
         private readonly IAuthService $authService

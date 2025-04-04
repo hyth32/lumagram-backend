@@ -10,7 +10,7 @@ use Application\Interfaces\Services\IUserService;
 use Application\Requests\User\UpdateProfileRequest;
 use Illuminate\Http\Request;
 
-class UserController implements IUserController
+class UserController extends Controller implements IUserController
 {
     public function __construct(
         private readonly IUserService $userService

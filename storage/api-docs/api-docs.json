@@ -1,0 +1,15 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Lumagram API Documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "api/"
+        }
+    ],
+    "paths": {
+        "/": {}
+    }
+}
