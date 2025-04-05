@@ -30,10 +30,8 @@ class TrasformApiResponse
     public function wrap($success, $content, $error)
     {
         return [
-            'meta' => [
-                'success' => $success,
-                'error' => $error,
-            ],
+            'success' => $success,
+            'error' => $error,
             'data' => $content,
         ];
     }
