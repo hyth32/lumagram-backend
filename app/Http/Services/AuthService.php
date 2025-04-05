@@ -22,10 +22,7 @@ class AuthService implements IAuthService
             'password' => Hash::make($dto->password),
         ]);
 
-        return [
-            'success' => true,
-            'data' => $user->createTokens(),
-        ];
+        return $user->createTokens();
     }
 
     public function loginUser(LoginUserDto $dto): array
@@ -39,10 +36,7 @@ class AuthService implements IAuthService
             ];
         }
 
-        return [
-            'success' => true,
-            'data' => $user->createTokens($dto->remember_me),
-        ];
+        return $user->createTokens($dto->remember_me);
     }
 
     public function logoutUser(Request $request): void
@@ -62,7 +56,7 @@ class AuthService implements IAuthService
             }
         );
 
-        return ['success' => $status === Password::RESET_LINK_SENT];
+        return ['sent' => $status === Password::RESET_LINK_SENT];
     }
     
     public function resetUserPassword(ResetPasswordRequest $request): array
@@ -76,7 +70,7 @@ class AuthService implements IAuthService
             }
         );
 
-        return ['success' => $status === Password::PASSWORD_RESET];
+        return ['sent' => $status === Password::PASSWORD_RESET];
     }
 
     public function refreshAccessToken(Request $request): array
@@ -84,11 +78,6 @@ class AuthService implements IAuthService
         $user = $request->user();
         $user->tokens()->where('name', '=', 'access-token')->delete();
 
-        return [
-            'success' => true,
-            'data' => [
-                'accessToken' => $user->createAccessToken(),
-            ],
-        ];
+        return ['accessToken' => $user->createAccessToken()];
     }
 }

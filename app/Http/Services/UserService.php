@@ -7,19 +7,15 @@ use App\Models\User;
 use Application\DTOs\User\ProfileDto;
 use Application\DTOs\User\UserDto;
 use Application\Interfaces\Services\IUserService;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserService implements IUserService
 {
-    public function getProfile(UserDto $dto): array
+    public function getProfile(UserDto $dto): JsonResource
     {
         $user = $this->findUser($dto);
 
-        return [
-            'success' => true,
-            'data' => [
-                'profile' => ProfileResource::make($user->profile),
-            ],
-        ];
+        return ProfileResource::make($user->profile);
     }
 
     public function updateProfile(UserDto $userDto, ProfileDto $profileDto): array
@@ -32,7 +28,7 @@ class UserService implements IUserService
             'activity_category' => $profileDto->activity_category,
         ]);
 
-        return ['success' => true];
+        return [];
     }
 
     public function findUser(UserDto $dto): ?User

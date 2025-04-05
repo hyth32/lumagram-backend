@@ -13,6 +13,7 @@ class TrasformApiResponse
         $response = $next($request);
 
         $success = (bool) $response->isSuccessful();
+        $error = null;
         $content = json_decode($response->getContent(), true);
         
         if (!$success) {
@@ -29,10 +30,14 @@ class TrasformApiResponse
 
     public function wrap($success, $content, $error)
     {
-        return [
-            'success' => $success,
-            'error' => $error,
-            'data' => $content,
-        ];
+        $wrapped = ['success' => $success];
+
+        if ($error) {
+            $wrapped['error'] = $error;
+        } else {
+            $wrapped['data'] = $content;
+        }
+
+        return $wrapped;
     }
 }
