@@ -38,7 +38,7 @@ class User extends Authenticatable
 
     public function createAccessToken(): string
     {
-        return $this->createToken('access-token', ['*'], now()->addHour())->plainTextToken;
+        return $this->createToken('access-token', ['*'], now()->addDay())->plainTextToken;
     }
 
     public function createRefreshToken(): string
@@ -48,10 +48,14 @@ class User extends Authenticatable
 
     public function createTokens($rememberMe = false): array
     {
+        $expirationDate = $rememberMe
+            ? now()->addWeek() // refresh
+            : now()->addDay(); // access
+
         return [
             'accessToken' => $this->createAccessToken(),
             'refreshToken' => $this->createRefreshToken(),
-            'expirationDate' => $rememberMe ? now()->addWeek() : null,
+            'expirationDate' => $expirationDate,
         ];
     }
 }
