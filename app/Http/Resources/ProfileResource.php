@@ -15,6 +15,7 @@ class ProfileResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'activityCategory' => $this->activity_category,
+            'isPublic' => $this->is_public,
         ];
     }
 }

@@ -26,6 +26,7 @@ class UserService implements IUserService
             'name' => $profileDto->name,
             'description' => $profileDto->description,
             'activity_category' => $profileDto->activity_category,
+            'is_public' => $profileDto->is_public,
         ]);
 
         return [];

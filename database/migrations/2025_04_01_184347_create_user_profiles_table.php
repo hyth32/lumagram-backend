@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->string('activity_category')->nullable();
+            $table->boolean('is_public')->default(true);
 
             $table->timestamps();
         });

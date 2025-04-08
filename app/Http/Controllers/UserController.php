@@ -38,6 +38,7 @@ class UserController extends Controller implements IUserController
             name: $request->input('name'),
             description: $request->input('description'),
             activity_category: $request->input('activityCategory'),
+            is_public: $request->input('isPublic'),
         );
 
         return $this->userService->updateProfile($userDto, $profileDto);
