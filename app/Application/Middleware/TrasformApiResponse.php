@@ -4,6 +4,7 @@ namespace Application\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 
 class TrasformApiResponse
@@ -15,10 +16,15 @@ class TrasformApiResponse
         $success = (bool) $response->isSuccessful();
         $error = null;
         $content = json_decode($response->getContent(), true);
-        
+
         if (!$success) {
-            $error = $content['message'] ?? $content['meta']['error'] ?? '';
             $content = $content['data'] ?? [];
+            $errors = $this->processErrors($content['errors'] ?? []);
+            if (!filled($errors)) {
+                $error = $content['message'] ?? $content['meta']['error'] ?? '';
+            } else {
+                $error = $errors;
+            }
         }
 
         $response->setContent(json_encode(
@@ -39,5 +45,10 @@ class TrasformApiResponse
         }
 
         return $wrapped;
+    }
+
+    public function processErrors(array $errors)
+    {
+        return collect($errors)->keys();
     }
 }
