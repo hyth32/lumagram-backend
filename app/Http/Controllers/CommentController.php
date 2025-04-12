@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Application\Interfaces\Controllers\IPostController;
-use Application\Interfaces\Services\IPostService;
+use Application\Interfaces\Controllers\ICommentController;
+use Application\Interfaces\Services\ICommentService;
 
-class PostController extends Controller implements IPostController
+class CommentController extends Controller implements ICommentController
 {
     public function __construct(
-        private readonly IPostService $postService,
+        private readonly ICommentService $commentService,
     ) {}
 
     /**
-     * @OA\Get(path="/posts",
+     * @OA\Get(path="/posts/{post}/comments",
      *      tags={"Post"},
-     *      summary="Список постов",
+     *      summary="Список комментариев",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(),
@@ -24,13 +24,13 @@ class PostController extends Controller implements IPostController
      */
     public function index(): array
     {
-        return $this->postService->getList();
+        return $this->commentService->getList();
     }
 
     /**
-     * @OA\Post(path="/posts",
+     * @OA\Post(path="/posts/{post}/comments",
      *      tags={"Post"},
-     *      summary="Сохранение поста",
+     *      summary="Добавление комментария",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(),
@@ -45,13 +45,14 @@ class PostController extends Controller implements IPostController
      */
     public function store(): array
     {
-        return $this->postService->storePost();
+        return $this->commentService->storeComment();
     }
 
+    
     /**
-     * @OA\Get(path="/posts/{post}",
+     * @OA\Put(path="/posts/{post}/comments/{comment}",
      *      tags={"Post"},
-     *      summary="Получение поста",
+     *      summary="Редактирование комментария",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(),
@@ -59,15 +60,15 @@ class PostController extends Controller implements IPostController
      *      )
      * )
      */
-    public function show(): array
+    public function update(): array
     {
-        return $this->postService->showPost();
+        return $this->commentService->updateComment();
     }
 
     /**
-     * @OA\Delete(path="/posts/{post}",
+     * @OA\Delete(path="/posts/{post}/comments/{comment}",
      *      tags={"Post"},
-     *      summary="Удаление поста",
+     *      summary="Удаление комментария",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(),
@@ -77,6 +78,6 @@ class PostController extends Controller implements IPostController
      */
     public function destroy(): array
     {
-        return $this->postService->destroyPost();
+        return $this->commentService->destroyComment();
     }
 }

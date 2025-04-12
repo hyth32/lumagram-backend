@@ -17,6 +17,17 @@ class UserController extends Controller implements IUserController
         private readonly IUserService $userService
     ) {}
 
+    /**
+     * @OA\Get(path="/users/me",
+     *      tags={"User"},
+     *      summary="Профиль текущего пользователя",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      )
+     * )
+     */
     public function me(Request $request): JsonResource
     {
         $dto = new UserDto(
@@ -27,6 +38,43 @@ class UserController extends Controller implements IUserController
         return $this->userService->getProfile($dto);
     }
 
+    /**
+     * @OA\Get(path="/users/{user}/profile",
+     *      tags={"User"},
+     *      summary="Профиль пользователя",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      )
+     * )
+     */
+    public function profile(User $user, Request $request): JsonResource
+    {
+        $dto = new UserDto(
+            id: $user->id,
+            username: $user->username,
+        );
+
+        return $this->userService->getProfile($dto);
+    }
+
+    /**
+     * @OA\Put(path="/users/me",
+     *      tags={"User"},
+     *      summary="Редактирование профиля",
+     *      @OA\RequestBody(description="Запрос",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      )
+     * )
+     */
     public function update(UpdateProfileRequest $request): array
     {
         $userDto = new UserDto(
@@ -42,15 +90,5 @@ class UserController extends Controller implements IUserController
         );
 
         return $this->userService->updateProfile($userDto, $profileDto);
-    }
-
-    public function profile(User $user, Request $request): JsonResource
-    {
-        $dto = new UserDto(
-            id: $user->id,
-            username: $user->username,
-        );
-
-        return $this->userService->getProfile($dto);
     }
 }

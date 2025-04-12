@@ -11,8 +11,4 @@ interface IPostService
     public function showPost(): array;
 
     public function destroyPost(): array;
-
-    public function likePost(): array;
-
-    public function addComment(): array;
 }

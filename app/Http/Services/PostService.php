@@ -25,14 +25,4 @@ class PostService implements IPostService
     {
         return [];
     }
-
-    public function likePost(): array
-    {
-        return [];
-    }
-
-    public function addComment(): array
-    {
-        return [];
-    }
 }
