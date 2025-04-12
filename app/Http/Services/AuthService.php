@@ -11,8 +11,7 @@ use Application\DTOs\Auth\RegisterUserDto;
 use App\Notifications\ResetPasswordNotification;
 use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\ResetPasswordRequest;
-use Error;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AuthService implements IAuthService
 {
@@ -30,9 +29,13 @@ class AuthService implements IAuthService
     public function loginUser(LoginUserDto $dto): array
     {
         $user = User::where('username', $dto->username)->first();
+
+        if ($user) {
+            throw new AuthorizationException('username');
+        }
         
         if (!Hash::check($dto->password, $user->password)) {
-            throw new Error('password');
+            throw new AuthorizationException('password');
         }
 
         return $user->createTokens($dto->remember_me);
