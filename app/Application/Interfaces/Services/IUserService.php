@@ -2,13 +2,13 @@
 
 namespace Application\Interfaces\Services;
 
+use App\Models\User;
 use Application\DTOs\User\ProfileDto;
-use Application\DTOs\User\UserDto;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 interface IUserService
 {
-    public function getProfile(UserDto $dto): JsonResource;
+    public function getProfile(User $user): JsonResource;
 
-    public function updateProfile(UserDto $userDto, ProfileDto $profileDto): array;
+    public function updateProfile(User $user, ProfileDto $profileDto): array;
 }

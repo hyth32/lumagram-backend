@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Application\DTOs\User\ProfileDto;
-use Application\DTOs\User\UserDto;
 use Application\Interfaces\Controllers\IUserController;
 use Application\Interfaces\Services\IUserService;
 use Application\Requests\User\UpdateProfileRequest;
@@ -30,12 +29,7 @@ class UserController extends Controller implements IUserController
      */
     public function me(Request $request): JsonResource
     {
-        $dto = new UserDto(
-            id: $request->user()->id,
-            username: $request->user()->username,
-        );
-
-        return $this->userService->getProfile($dto);
+        return $this->userService->getProfile($request->user());
     }
 
     /**
@@ -49,14 +43,9 @@ class UserController extends Controller implements IUserController
      *      )
      * )
      */
-    public function profile(User $user, Request $request): JsonResource
+    public function profile(User $user): JsonResource
     {
-        $dto = new UserDto(
-            id: $user->id,
-            username: $user->username,
-        );
-
-        return $this->userService->getProfile($dto);
+        return $this->userService->getProfile($user);
     }
 
     /**
@@ -77,11 +66,6 @@ class UserController extends Controller implements IUserController
      */
     public function update(UpdateProfileRequest $request): array
     {
-        $userDto = new UserDto(
-            id: $request->user()->id,
-            username: $request->user()->username,
-        );
-
         $profileDto = new ProfileDto(
             name: $request->input('name'),
             description: $request->input('description'),
@@ -89,6 +73,6 @@ class UserController extends Controller implements IUserController
             is_public: $request->input('isPublic'),
         );
 
-        return $this->userService->updateProfile($userDto, $profileDto);
+        return $this->userService->updateProfile($request->user(), $profileDto);
     }
 }
