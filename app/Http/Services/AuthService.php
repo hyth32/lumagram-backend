@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -72,13 +73,21 @@ class AuthService implements IAuthService
         $status = Password::reset(
             $request->only('email', 'password', 'token'),
             function (User $user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password)
-                ])->save();
+                $user->setPassword($request->input('password'));
+                $user->save();
             }
         );
 
         return ['sent' => $status === Password::PASSWORD_RESET];
+    }
+
+    public function changeUserPassword(ChangePasswordRequest $request): array
+    {
+        $user = $request->user();
+        $user->setPassword($request->input('password'));
+        $user->save();
+
+        return [];
     }
 
     public function refreshAccessToken(Request $request): array

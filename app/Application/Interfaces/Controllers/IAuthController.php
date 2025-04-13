@@ -2,6 +2,7 @@
 
 namespace Application\Interfaces\Controllers;
 
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use Application\Requests\Auth\LoginUserRequest;
 use Application\Requests\Auth\RegisterUserRequest;
 use Application\Requests\Auth\ForgotPasswordRequest;
@@ -19,6 +20,8 @@ interface IAuthController
     public function forgotPassword(ForgotPasswordRequest $request): array;
     
     public function resetPassword(ResetPasswordRequest $request): array;
+
+    public function changePassword(ChangePasswordRequest $request): array;
 
     public function refresh(Request $request): array;
 }

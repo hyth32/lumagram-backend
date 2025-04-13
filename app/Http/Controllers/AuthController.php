@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Interfaces\Services\IAuthService;
@@ -133,6 +134,27 @@ class AuthController extends Controller implements IAuthController
     public function resetPassword(ResetPasswordRequest $request): array
     {
         return $this->authService->resetUserPassword($request);
+    }
+
+    /**
+     * @OA\Post(path="/auth/reset-password",
+     *      tags={"Auth"},
+     *      summary="Смена пароля",
+     *      @OA\RequestBody(description="Запрос",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      )
+     * )
+     */
+    public function changePassword(ChangePasswordRequest $request): array
+    {
+        return $this->authService->changeUserPassword($request);
     }
 
     /**
