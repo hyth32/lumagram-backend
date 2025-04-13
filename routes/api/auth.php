@@ -13,8 +13,8 @@ Route::controller(IAuthController::class)->prefix('auth')->group(function () {
     Route::post('/refresh', 'refresh');
 });
 
-Route::controller(IAuthController::class)->prefix('auth')->group(function () {
+Route::controller(IAuthController::class)->middleware('auth:sanctum')->prefix('auth')->group(function () {
     Route::post('/logout', 'logout');
     
     Route::post('/change-password', 'changePassword');
-})->middleware('auth:sanctum');
+});
