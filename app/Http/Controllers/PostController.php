@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Application\DTOs\Post\PostDto;
+use Application\Requests\BaseListRequest;
 use Application\Requests\Post\StorePostRequest;
 use Application\Interfaces\Services\IPostService;
 use Application\Interfaces\Controllers\IPostController;
@@ -24,9 +25,9 @@ class PostController extends Controller implements IPostController
      *      )
      * )
      */
-    public function index(): array
+    public function index(BaseListRequest $request): array
     {
-        return $this->postService->getList();
+        return $this->postService->getList($request);
     }
 
     /**

@@ -6,11 +6,14 @@ use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Application\Interfaces\Services\IImageService;
+use Illuminate\Support\Facades\Storage;
 
 class ImageService implements IImageService
 {
     public function upload(UploadedFile $image, string $path): Image
     {
+        Storage::disk('public')->makeDirectory($path);
+
         $imageInfo = getimagesize($image->getRealPath());
         [$width, $height] = $imageInfo;
         $fileName = $this->getFileName($image);
@@ -25,12 +28,12 @@ class ImageService implements IImageService
             'mime_type' => $image->getMimeType(),
             'width' => $width,
             'height' => $height,
-            'path' => "public/$path/$fileName",
+            'path' => "$path/$fileName",
         ]);
     }
 
     public function getFileName(UploadedFile $image)
     {
-        return Str::uuid() . '.' . $image->extension();
+        return Str::uuid() . '.' . $image->getClientOriginalExtension();
     }
 }

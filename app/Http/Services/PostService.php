@@ -2,10 +2,12 @@
 
 namespace App\Http\Services;
 
+use App\Http\Resources\PostResource;
+use App\Models\Post;
 use App\Models\User;
 use Application\DTOs\Post\PostDto;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Application\Requests\BaseListRequest;
 use Application\Interfaces\Services\IPostService;
 use Application\Interfaces\Services\IImageService;
 
@@ -15,9 +17,13 @@ class PostService implements IPostService
         private readonly IImageService $imageService,
     ) {}
 
-    public function getList(): array
+    public function getList(BaseListRequest $request): array
     {
-        return [];
+        $postsQuery = Post::query()->orderByDesc('created_at');
+
+        $posts = $postsQuery->offset($request->input('offset'))->limit($request->input('limit'))->get();
+
+        return ['posts' => PostResource::collection($posts)];
     }
 
     public function storePost(User $user, PostDto $dto): array
