@@ -4,6 +4,7 @@ namespace Application\Interfaces\Services;
 
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
+use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ interface IAuthService
 
     public function resetUserPassword(ResetPasswordRequest $request): array;
 
-    public function forgotPassword(string $email): array;
+    public function forgotPassword(ForgotPasswordRequest $request): array;
 
     public function refreshAccessToken(Request $request): array;
 }

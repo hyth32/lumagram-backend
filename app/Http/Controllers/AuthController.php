@@ -111,7 +111,7 @@ class AuthController extends Controller implements IAuthController
      */
     public function forgotPassword(ForgotPasswordRequest $request): array
     {
-        return $this->authService->forgotPassword($request->input('email'));
+        return $this->authService->forgotPassword($request);
     }
 
     /**

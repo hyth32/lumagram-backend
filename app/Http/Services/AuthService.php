@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Password;
 use Application\DTOs\Auth\RegisterUserDto;
 use App\Notifications\ResetPasswordNotification;
 use Application\Interfaces\Services\IAuthService;
+use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 
@@ -46,10 +47,15 @@ class AuthService implements IAuthService
         $request->user()->tokens()->delete();
     }
 
-    public function forgotPassword(string $email): array
+    public function forgotPassword(ForgotPasswordRequest $request): array
     {
+        $user = User::query()
+            ->where('email', '=', $request->input('email'))
+            ->orWhere('username', '=', $request->input('username'))
+            ->first();
+        
         $status = Password::sendResetLink(
-            ['email' => $email],
+            ['email' => $user->email],
             function (User $user) {
                 $token = Password::createToken($user);
                 $url = config('app.frontend_url') . '/reset-password?token=' . $token;
