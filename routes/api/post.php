@@ -15,11 +15,11 @@ Route::controller(IPostController::class)->prefix('posts')->group(function () {
 Route::controller(ILikeController::class)->prefix('posts')->group(function () {
     Route::get('/{post}/likes', 'index');
     Route::put('/{post}/likes', 'toggle');
-});
+})->middleware('auth:sanctum');
 
 Route::controller(ICommentController::class)->prefix('posts')->group(function () {
     Route::get('/{post}/comments', 'index');
     Route::post('/{post}/comments', 'store');
     Route::put('/{post}/comments/{comment}', 'update');
     Route::delete('/{post}/comments/{comment}', 'destroy');
-});
+})->middleware('auth:sanctum');
