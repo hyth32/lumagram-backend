@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\ChangePasswordRequest;
+use Illuminate\Http\Request;
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
+use Application\Requests\Auth\LoginUserRequest;
 use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\RegisterUserRequest;
-use Application\Interfaces\Controllers\IAuthController;
-use Application\Requests\Auth\LoginUserRequest;
-use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
-use Illuminate\Http\Request;
+use Application\Requests\Auth\ChangePasswordRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
+use Application\Interfaces\Controllers\IAuthController;
 
 class AuthController extends Controller implements IAuthController
 {
@@ -137,7 +137,7 @@ class AuthController extends Controller implements IAuthController
     }
 
     /**
-     * @OA\Post(path="/auth/reset-password",
+     * @OA\Post(path="/auth/change-password",
      *      tags={"Auth"},
      *      summary="Смена пароля",
      *      @OA\RequestBody(description="Запрос",

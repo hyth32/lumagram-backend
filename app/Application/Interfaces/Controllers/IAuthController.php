@@ -2,12 +2,12 @@
 
 namespace Application\Interfaces\Controllers;
 
-use App\Http\Requests\Auth\ChangePasswordRequest;
+use Illuminate\Http\Request;
 use Application\Requests\Auth\LoginUserRequest;
 use Application\Requests\Auth\RegisterUserRequest;
-use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
-use Illuminate\Http\Request;
+use Application\Requests\Auth\ChangePasswordRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
 
 interface IAuthController
 {

@@ -2,13 +2,12 @@
 
 namespace Application\Interfaces\Services;
 
-use App\Http\Requests\Auth\ChangePasswordRequest;
-use App\Models\User;
+use Illuminate\Http\Request;
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
-use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
-use Illuminate\Http\Request;
+use Application\Requests\Auth\ChangePasswordRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
 
 interface IAuthService
 {

@@ -146,6 +146,33 @@
                 }
             }
         },
+        "/auth/change-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Смена пароля",
+                "operationId": "255dd8dc9b5174b7256349a2318e8c1e",
+                "requestBody": {
+                    "description": "Запрос",
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/refresh": {
             "post": {
                 "tags": [

@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,9 +10,10 @@ use Illuminate\Support\Facades\Password;
 use Application\DTOs\Auth\RegisterUserDto;
 use App\Notifications\ResetPasswordNotification;
 use Application\Interfaces\Services\IAuthService;
-use Application\Requests\Auth\ForgotPasswordRequest;
-use Application\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Auth\Access\AuthorizationException;
+use Application\Requests\Auth\ResetPasswordRequest;
+use Application\Requests\Auth\ChangePasswordRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
 
 class AuthService implements IAuthService
 {
