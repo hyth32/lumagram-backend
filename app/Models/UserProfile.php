@@ -17,4 +17,9 @@ class UserProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function avatar()
+    {
+        return $this->belongsTo(Image::class, 'avatar');
+    }
 }
