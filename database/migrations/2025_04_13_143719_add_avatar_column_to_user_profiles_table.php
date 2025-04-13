@@ -9,14 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user_profiles', function (Blueprint $table) {
-            $table->foreignUuid('avatar')->constrained('images')->nullOnDelete();
+            $table->foreignUuid('image_id')->constrained('images')->nullOnDelete();
         });
     }
 
     public function down(): void
     {
         Schema::table('user_profiles', function (Blueprint $table) {
-            $table->dropForeign('avatar');
+            $table->dropForeign('image_id');
         });
     }
 };

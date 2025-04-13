@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class UserProfile extends Model
+class Post extends Model
 {
     public static function boot()
     {
@@ -13,20 +12,17 @@ class UserProfile extends Model
 
         static::creating(fn (self $model) => $model->id = (string) Str::uuid());
     }
-    
+
     protected $fillable = [
-        'name',
         'description',
-        'activity_category',
-        'is_public',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function avatar()
+    public function image()
     {
         return $this->belongsTo(Image::class, 'image_id');
     }
