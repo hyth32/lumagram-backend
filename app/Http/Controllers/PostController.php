@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Application\Interfaces\Controllers\IPostController;
+use Application\DTOs\Post\PostDto;
+use Application\Requests\Post\StorePostRequest;
 use Application\Interfaces\Services\IPostService;
+use Application\Interfaces\Controllers\IPostController;
 
 class PostController extends Controller implements IPostController
 {
@@ -43,9 +45,10 @@ class PostController extends Controller implements IPostController
      *      )
      * )
      */
-    public function store(): array
+    public function store(StorePostRequest $request): array
     {
-        return $this->postService->storePost();
+        $dto = PostDto::fromRequest($request);
+        return $this->postService->storePost($request->user(), $dto);
     }
 
     /**

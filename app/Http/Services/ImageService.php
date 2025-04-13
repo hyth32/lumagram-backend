@@ -13,10 +13,11 @@ class ImageService implements IImageService
     {
         $imageInfo = getimagesize($image->getRealPath());
         [$width, $height] = $imageInfo;
+        $fileName = $this->getFileName($image);
 
-        $relativePath = $image->storeAs(
+        $image->storeAs(
             $path,
-            $this->getFileName($image),
+            $fileName,
             'public',
         );
 
@@ -24,7 +25,7 @@ class ImageService implements IImageService
             'mime_type' => $image->getMimeType(),
             'width' => $width,
             'height' => $height,
-            'path' => $relativePath,
+            'path' => "public/$path/$fileName",
         ]);
     }
 

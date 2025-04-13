@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function createAccessToken(): string
     {
         return $this->createToken('access-token', ['*'], now()->addDay())->plainTextToken;

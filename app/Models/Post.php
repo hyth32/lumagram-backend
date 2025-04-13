@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use HasUuids;
+
     public static function boot()
     {
         parent::boot();
@@ -14,6 +18,8 @@ class Post extends Model
     }
 
     protected $fillable = [
+        'user_id',
+        'image_id',
         'description',
     ];
 
