@@ -32,7 +32,7 @@ class AuthService implements IAuthService
     {
         $user = User::where('username', $dto->username)->first();
 
-        if ($user) {
+        if (!$user) {
             throw new AuthorizationException('username');
         }
         
