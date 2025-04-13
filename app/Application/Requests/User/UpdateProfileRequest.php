@@ -18,6 +18,7 @@ class UpdateProfileRequest extends FormRequest
             'description' => 'nullable|string',
             'activityCategory' => 'nullable|string',
             'isPublic' => 'required|boolean',
+            'image' => 'nullable|image',
         ];
     }
 }

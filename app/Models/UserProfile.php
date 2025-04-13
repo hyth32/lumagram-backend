@@ -19,6 +19,7 @@ class UserProfile extends Model
         'description',
         'activity_category',
         'is_public',
+        'image_id',
     ];
 
     public function user()

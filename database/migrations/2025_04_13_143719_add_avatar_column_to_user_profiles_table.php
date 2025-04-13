@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user_profiles', function (Blueprint $table) {
-            $table->foreignUuid('image_id')->constrained('images')->nullOnDelete();
+            $table->foreignUuid('image_id')->nullable()->constrained('images')->nullOnDelete();
         });
     }
 

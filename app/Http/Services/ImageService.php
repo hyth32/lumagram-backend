@@ -10,8 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageService implements IImageService
 {
-    public function upload(UploadedFile $image, string $path): Image
+    public function upload(UploadedFile $image, string $path): ?Image
     {
+        if (empty($image)) {
+            return null;
+        }
+
         Storage::disk('public')->makeDirectory($path);
 
         $imageInfo = getimagesize($image->getRealPath());

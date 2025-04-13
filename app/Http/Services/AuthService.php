@@ -25,6 +25,8 @@ class AuthService implements IAuthService
             'password' => Hash::make($dto->password),
         ]);
 
+        $user->profile()->create();
+
         return $user->createTokens();
     }
 

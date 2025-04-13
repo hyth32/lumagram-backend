@@ -66,13 +66,7 @@ class UserController extends Controller implements IUserController
      */
     public function update(UpdateProfileRequest $request): array
     {
-        $profileDto = new ProfileDto(
-            name: $request->input('name'),
-            description: $request->input('description'),
-            activity_category: $request->input('activityCategory'),
-            is_public: $request->input('isPublic'),
-        );
-
-        return $this->userService->updateProfile($request->user(), $profileDto);
+        $dto = ProfileDto::fromRequest($request);
+        return $this->userService->updateProfile($request->user(), $dto);
     }
 }
