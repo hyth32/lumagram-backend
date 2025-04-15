@@ -23,8 +23,9 @@ class TrasformApiResponse
             } else {
                 $error = [$content['message']];
             }
-            $content = $content['data'] ?? [];
         }
+
+        $content = $content['data'] ?? [];
 
         $response->setContent(json_encode(
             $this->wrap($success, $content, $error)
