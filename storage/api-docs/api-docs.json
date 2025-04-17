@@ -146,6 +146,33 @@
                 }
             }
         },
+        "/auth/change-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Смена пароля",
+                "operationId": "255dd8dc9b5174b7256349a2318e8c1e",
+                "requestBody": {
+                    "description": "Запрос",
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/refresh": {
             "post": {
                 "tags": [
@@ -172,12 +199,279 @@
                     }
                 }
             }
+        },
+        "/posts/{post}/comments": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Список комментариев",
+                "operationId": "00a7052dfabc2d7ba47f1f5d5d62f176",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Добавление комментария",
+                "operationId": "98a3c321f84f38f3212cd81009382df5",
+                "requestBody": {
+                    "description": "Запрос",
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{post}/comments/{comment}": {
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Редактирование комментария",
+                "operationId": "72a6bc2fba695e995290d2b69504662c",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Удаление комментария",
+                "operationId": "63437965df743a0706c14d87214bc89f",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{post}/likes": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Список пользователей, лайкнувших пост",
+                "operationId": "8d85d3ecbfe39696ab6d472e9bbd7aac",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Поставить/убрать лайк",
+                "operationId": "6aca151247159483dcc006a4426df840",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Список постов",
+                "operationId": "5f292ed47bdbfa79356750be0807450c",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Сохранение поста",
+                "operationId": "c2e0b0e26215e6d34ece33ebae25f7df",
+                "requestBody": {
+                    "description": "Запрос",
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{post}": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Получение поста",
+                "operationId": "19d7b55d7d5efd7bc27ed7c01d74ca95",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Удаление поста",
+                "operationId": "f5991cc3c6e9a5fcb5b97135fbe27b0c",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/me": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Профиль текущего пользователя",
+                "operationId": "c26146dbc87681db03ebd0c6df994764",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Редактирование профиля",
+                "operationId": "f4a69737149a4e401e6d4b405bb88c2c",
+                "requestBody": {
+                    "description": "Запрос",
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user}/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Профиль пользователя",
+                "operationId": "c0ba3593774a24b2c847f76d29096ea3",
+                "responses": {
+                    "200": {
+                        "description": "Ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Post",
+            "description": "Post"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ]
 }

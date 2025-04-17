@@ -18,14 +18,14 @@ class TrasformApiResponse
         $content = json_decode($response->getContent(), true);
 
         if (!$success) {
-            $content = $content['data'] ?? [];
-            $errors = $this->processErrors($content['errors'] ?? []);
-            if (!filled($errors)) {
-                $error = $content['message'] ?? $content['meta']['error'] ?? '';
+            if (isset($content['errors'])) {
+                $error = $this->processErrors($content['errors']);
             } else {
-                $error = $errors;
+                $error = [$content['message']];
             }
         }
+
+        $content = $content['data'] ?? [];
 
         $response->setContent(json_encode(
             $this->wrap($success, $content, $error)
@@ -49,6 +49,6 @@ class TrasformApiResponse
 
     public function processErrors(array $errors)
     {
-        return collect($errors)->keys();
+        return collect($errors)->keys()->toArray();
     }
 }

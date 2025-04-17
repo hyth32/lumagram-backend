@@ -5,38 +5,34 @@ namespace App\Http\Services;
 use App\Http\Resources\ProfileResource;
 use App\Models\User;
 use Application\DTOs\User\ProfileDto;
-use Application\DTOs\User\UserDto;
+use Application\Interfaces\Services\IImageService;
 use Application\Interfaces\Services\IUserService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserService implements IUserService
 {
-    public function getProfile(UserDto $dto): JsonResource
-    {
-        $user = $this->findUser($dto);
+    public function __construct(
+        private readonly IImageService $imageService,
+    ) {}
 
+    public function getProfile(User $user): JsonResource
+    {
         return ProfileResource::make($user->profile);
     }
 
-    public function updateProfile(UserDto $userDto, ProfileDto $profileDto): array
+    public function updateProfile(User $user, ProfileDto $dto): array
     {
-        $user = $this->findUser($userDto);
+        $imagePath = "users/$user->username/profile";
+        $image = $this->imageService->upload($dto->image, $imagePath);
 
         $user->profile()->updateOrCreate([
-            'name' => $profileDto->name,
-            'description' => $profileDto->description,
-            'activity_category' => $profileDto->activity_category,
-            'is_public' => $profileDto->is_public,
+            'name' => $dto->name,
+            'description' => $dto->description,
+            'activity_category' => $dto->activity_category,
+            'is_public' => $dto->is_public,
+            'image_id' => $image->id,
         ]);
 
         return [];
-    }
-
-    public function findUser(UserDto $dto): ?User
-    {
-        return User::query()
-            ->where('id', '=', $dto->id)
-            ->orWhere('username', '=', $dto->username)
-            ->first();
     }
 }

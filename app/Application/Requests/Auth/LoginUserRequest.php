@@ -19,4 +19,11 @@ class LoginUserRequest extends FormRequest
             'rememberMe' => 'required|boolean',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'username' => 'username',
+        ];
+    }
 }

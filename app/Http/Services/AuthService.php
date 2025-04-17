@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Password;
 use Application\DTOs\Auth\RegisterUserDto;
 use App\Notifications\ResetPasswordNotification;
 use Application\Interfaces\Services\IAuthService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Application\Requests\Auth\ResetPasswordRequest;
-use Error;
+use Application\Requests\Auth\ChangePasswordRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
 
 class AuthService implements IAuthService
 {
@@ -23,19 +25,21 @@ class AuthService implements IAuthService
             'password' => Hash::make($dto->password),
         ]);
 
-        return [
-            'userId' => $user->id,
-            'timestamp' => now(),
-            ...$user->createTokens(),
-        ];
+        $user->profile()->create();
+
+        return $user->createTokens();
     }
 
     public function loginUser(LoginUserDto $dto): array
     {
         $user = User::where('username', $dto->username)->first();
+
+        if (!$user) {
+            throw new AuthorizationException('username');
+        }
         
         if (!Hash::check($dto->password, $user->password)) {
-            throw new Error('password');
+            throw new AuthorizationException('password');
         }
 
         return [
@@ -50,10 +54,15 @@ class AuthService implements IAuthService
         $request->user()->tokens()->delete();
     }
 
-    public function forgotPassword(string $email): array
+    public function forgotPassword(ForgotPasswordRequest $request): array
     {
+        $user = User::query()
+            ->where('email', '=', $request->input('email'))
+            ->orWhere('username', '=', $request->input('username'))
+            ->first();
+        
         $status = Password::sendResetLink(
-            ['email' => $email],
+            ['email' => $user->email],
             function (User $user) {
                 $token = Password::createToken($user);
                 $url = config('app.frontend_url') . '/reset-password?token=' . $token;
@@ -70,13 +79,21 @@ class AuthService implements IAuthService
         $status = Password::reset(
             $request->only('email', 'password', 'token'),
             function (User $user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password)
-                ])->save();
+                $user->setPassword($request->input('password'));
+                $user->save();
             }
         );
 
         return ['sent' => $status === Password::PASSWORD_RESET];
+    }
+
+    public function changeUserPassword(ChangePasswordRequest $request): array
+    {
+        $user = $request->user();
+        $user->setPassword($request->input('password'));
+        $user->save();
+
+        return [];
     }
 
     public function refreshAccessToken(Request $request): array

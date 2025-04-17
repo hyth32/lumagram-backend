@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
+use Application\Requests\Auth\LoginUserRequest;
 use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\RegisterUserRequest;
-use Application\Interfaces\Controllers\IAuthController;
-use Application\Requests\Auth\LoginUserRequest;
-use Application\Requests\Auth\ForgotPasswordRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
-use Illuminate\Http\Request;
+use Application\Requests\Auth\ChangePasswordRequest;
+use Application\Requests\Auth\ForgotPasswordRequest;
+use Application\Interfaces\Controllers\IAuthController;
 
 class AuthController extends Controller implements IAuthController
 {
@@ -111,7 +112,7 @@ class AuthController extends Controller implements IAuthController
      */
     public function forgotPassword(ForgotPasswordRequest $request): array
     {
-        return $this->authService->forgotPassword($request->input('email'));
+        return $this->authService->forgotPassword($request);
     }
 
     /**
@@ -133,6 +134,27 @@ class AuthController extends Controller implements IAuthController
     public function resetPassword(ResetPasswordRequest $request): array
     {
         return $this->authService->resetUserPassword($request);
+    }
+
+    /**
+     * @OA\Post(path="/auth/change-password",
+     *      tags={"Auth"},
+     *      summary="Смена пароля",
+     *      @OA\RequestBody(description="Запрос",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(),
+     *          )
+     *      )
+     * )
+     */
+    public function changePassword(ChangePasswordRequest $request): array
+    {
+        return $this->authService->changeUserPassword($request);
     }
 
     /**
