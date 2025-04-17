@@ -17,16 +17,6 @@ class UserController extends Controller implements IUserController
         private readonly IUserService $userService
     ) {}
 
-    public function me(Request $request): JsonResource
-    {
-        $dto = new UserDto(
-            id: $request->user()->id,
-            username: $request->user()->username,
-        );
-
-        return $this->userService->getProfile($dto);
-    }
-
     public function update(UpdateProfileRequest $request): array
     {
         $userDto = new UserDto(

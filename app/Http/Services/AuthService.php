@@ -12,7 +12,6 @@ use App\Notifications\ResetPasswordNotification;
 use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\ResetPasswordRequest;
 use Error;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthService implements IAuthService
 {
@@ -24,7 +23,11 @@ class AuthService implements IAuthService
             'password' => Hash::make($dto->password),
         ]);
 
-        return $user->createTokens();
+        return [
+            'userId' => $user->id,
+            'timestamp' => now(),
+            ...$user->createTokens(),
+        ];
     }
 
     public function loginUser(LoginUserDto $dto): array
@@ -35,7 +38,11 @@ class AuthService implements IAuthService
             throw new Error('password');
         }
 
-        return $user->createTokens($dto->remember_me);
+        return [
+            'userId' => $user->id,
+            'timestamp' => now(),
+            ...$user->createTokens($dto->remember_me),
+        ];
     }
 
     public function logoutUser(Request $request): void
