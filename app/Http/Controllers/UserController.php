@@ -7,7 +7,6 @@ use Application\DTOs\User\ProfileDto;
 use Application\Interfaces\Controllers\IUserController;
 use Application\Interfaces\Services\IUserService;
 use Application\Requests\User\UpdateProfileRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserController extends Controller implements IUserController
@@ -29,12 +28,7 @@ class UserController extends Controller implements IUserController
      */
     public function profile(User $user): JsonResource
     {
-        $dto = new UserDto(
-            id: $request->user()->id,
-            username: $request->user()->username,
-        );
-
-        return $this->userService->getProfile($dto);
+        return $this->userService->getProfile($user);
     }
 
     /**

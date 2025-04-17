@@ -16,6 +16,7 @@ class TrasformApiResponse
         $success = (bool) $response->isSuccessful();
         $error = null;
         $content = json_decode($response->getContent(), true);
+        \Log::info($content);
 
         if (!$success) {
             if (isset($content['errors'])) {
@@ -25,7 +26,7 @@ class TrasformApiResponse
             }
         }
 
-        $content = $content['data'] ?? [];
+        $content = $content['data'] ?? $content ?? [];
 
         $response->setContent(json_encode(
             $this->wrap($success, $content, $error)

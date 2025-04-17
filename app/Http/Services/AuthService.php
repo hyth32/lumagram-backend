@@ -27,7 +27,11 @@ class AuthService implements IAuthService
 
         $user->profile()->create();
 
-        return $user->createTokens();
+        return [
+            'userId' => $user->id,
+            'timestamp' => now(),
+            ...$user->createTokens(),
+        ];
     }
 
     public function loginUser(LoginUserDto $dto): array
