@@ -7,3 +7,7 @@ Route::controller(IUserController::class)->middleware('auth:sanctum')->prefix('u
     Route::put('/me', 'update');
     Route::get('/{user}/profile', 'profile');
 });
+
+Route::controller(IUserController::class)->prefix('open')->group(function () {
+    Route::get('/activities', 'activities');
+});

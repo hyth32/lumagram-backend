@@ -2,11 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Http\Resources\ActivityResource;
 use App\Http\Resources\ProfileResource;
+use App\Models\Activity;
 use App\Models\User;
 use Application\DTOs\User\ProfileDto;
 use Application\Interfaces\Services\IImageService;
 use Application\Interfaces\Services\IUserService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserService implements IUserService
@@ -34,5 +37,11 @@ class UserService implements IUserService
         ]);
 
         return [];
+    }
+
+    public function listActivities(Request $request): array
+    {
+        $activities = Activity::query()->get();
+        return ['activities' => ActivityResource::collection($activities)];
     }
 }

@@ -7,6 +7,7 @@ use Application\DTOs\User\ProfileDto;
 use Application\Interfaces\Controllers\IUserController;
 use Application\Interfaces\Services\IUserService;
 use Application\Requests\User\UpdateProfileRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserController extends Controller implements IUserController
@@ -57,5 +58,25 @@ class UserController extends Controller implements IUserController
     {
         $dto = ProfileDto::fromRequest($request);
         return $this->userService->updateProfile($request->user(), $dto);
+    }
+
+    /**
+     * @OA\Get(path="/open/activities",
+     *      tags={"Open"},
+     *      summary="Категории активности",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="activities", type="array", @OA\Items(
+     *                      @OA\Property(property="name", type="string", description="Название категории"),
+     *                  ))
+     *              ),
+     *          )
+     *      )
+     * )
+     */
+    public function activities(Request $request): array
+    {
+        return $this->userService->listActivities($request);
     }
 }

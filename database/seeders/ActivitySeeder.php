@@ -11,10 +11,13 @@ class ActivitySeeder extends Seeder
     {
         $activities = ['Программист', 'Дизайнер', 'Колхозник'];
 
-        foreach ($activities as $activityName) {
-            Activity::create([
-                'name' => $activityName,
-            ]);
+        foreach ($activities as $name) {
+            try {
+                Activity::create(['name' => $name]);
+                $this->command->info("Created: $name");
+            } catch (\Exception $e) {
+                $this->command->error($e->getMessage());
+            }
         }
     }
 }
