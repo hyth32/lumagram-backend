@@ -37,8 +37,14 @@ class UserController extends Controller implements IUserController
      *      summary="Редактирование профиля",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
-     *          )
+     *              @OA\Schema(
+     *                  @OA\Property(property="image", type="file", description="Аватарка пользователя"),
+     *                  @OA\Property(property="name", type="string", description="Имя"),
+     *                  @OA\Property(property="description", type="string", description="Описание"),
+     *                  @OA\Property(property="activityCategory", type="file", description="Категория активности"),
+     *                  @OA\Property(property="isPublic", type="boolean", description="Метка открытости профиля"),
+     *              ),
+     *          ),
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",

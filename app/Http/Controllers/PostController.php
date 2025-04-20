@@ -22,7 +22,7 @@ class PostController extends Controller implements IPostController
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(),
      *          )
-     *      )
+     *      ),
      * )
      */
     public function index(BaseListRequest $request): array
@@ -36,8 +36,11 @@ class PostController extends Controller implements IPostController
      *      summary="Сохранение поста",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
-     *          )
+     *              @OA\Schema(
+     *                  @OA\Property(property="image", type="file", description="Изображение поста"),
+     *                  @OA\Property(property="description", type="string", description="Описание поста"),
+     *              ),
+     *          ),
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
