@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function createAccessToken(): string
     {
         return $this->createToken('access-token', ['*'], now()->addDay())->plainTextToken;

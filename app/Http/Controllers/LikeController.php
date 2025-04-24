@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\LikeService;
 use App\Models\Post;
+use Application\Requests\BaseListRequest;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -25,9 +26,9 @@ class LikeController extends Controller
      *      )
      * )
      */
-    public function index(Post $post): array
+    public function index(Post $post, BaseListRequest $request): array
     {
-        return $this->likeService->getList($post);
+        return $this->likeService->getList($post, $request);
     }
 
     /**

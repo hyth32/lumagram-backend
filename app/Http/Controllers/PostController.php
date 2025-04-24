@@ -88,7 +88,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post, Request $request): array
     {
-        if (!$request->user()->posts()->where('id', $post->id)->exists()) {
+        if ($post->user_id !== $request->user()->id) {
             abort(403, 'Cannot delete post');
         }
         

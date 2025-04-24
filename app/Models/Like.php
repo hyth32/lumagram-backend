@@ -10,6 +10,10 @@ class Like extends Model
 {
     use HasUuids;
 
+    protected $fillable = [
+        'post_id',
+    ];
+
     public static function boot()
     {
         parent::boot();

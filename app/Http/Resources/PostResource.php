@@ -17,7 +17,7 @@ class PostResource extends JsonResource
             'description' => $this->description,
             'publishedAt' => $this->created_at,
             'likeCount' => $this->likes()->count(),
-            'commentCount' => null,
+            'commentCount' => $this->comments()->count(),
         ];
     }
 }

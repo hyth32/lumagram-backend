@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use App\Models\User;
 use App\Models\Activity;
-use Illuminate\Http\Request;
 use App\Http\Services\ImageService;
 use Application\DTOs\User\ProfileDto;
 use App\Http\Resources\ProfileResource;

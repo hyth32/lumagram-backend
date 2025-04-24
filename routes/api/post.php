@@ -20,6 +20,9 @@ Route::controller(LikeController::class)->middleware('auth:sanctum')->prefix('po
 Route::controller(CommentController::class)->middleware('auth:sanctum')->prefix('posts')->group(function () {
     Route::get('/{post}/comments', 'index');
     Route::post('/{post}/comments', 'store');
-    Route::put('/{post}/comments/{comment}', 'update');
-    Route::delete('/{post}/comments/{comment}', 'destroy');
+});
+
+Route::controller(CommentController::class)->middleware('auth:sanctum')->prefix('comments')->group(function () {
+    Route::put('/{comment}', 'update');
+    Route::delete('/{comment}', 'destroy');
 });

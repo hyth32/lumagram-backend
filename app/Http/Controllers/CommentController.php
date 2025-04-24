@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Http\Services\CommentService;
+use App\Models\Comment;
+use Application\Requests\BaseListRequest;
+use Application\Requests\Comment\StoreCommentRequest;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentController extends Controller
 {
@@ -16,14 +22,16 @@ class CommentController extends Controller
      *      summary="Список комментариев",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="comments", type="array", @OA\Items(ref="#/components/schemas/Comment")),
+     *              ),
      *          )
      *      )
      * )
      */
-    public function index(): array
+    public function index(Post $post, BaseListRequest $request): array
     {
-        return $this->commentService->getList();
+        return $this->commentService->getList($post, $request);
     }
 
     /**
@@ -32,40 +40,53 @@ class CommentController extends Controller
      *      summary="Добавление комментария",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="text", type="string", description="Текст комментария"),
+     *              ),
      *          )
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(ref="#/components/schemas/Comment"),
      *          )
      *      )
      * )
      */
-    public function store(): array
+    public function store(Post $post, StoreCommentRequest $request): JsonResource
     {
-        return $this->commentService->storeComment();
+        return $this->commentService->storeComment($post, $request);
     }
 
     
     /**
-     * @OA\Put(path="/posts/{post}/comments/{comment}",
+     * @OA\Put(path="/comments/{comment}",
      *      tags={"Post"},
      *      summary="Редактирование комментария",
+     *      @OA\RequestBody(description="Запрос",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="text", type="string", description="Текст комментария"),
+     *              ),
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(ref="#/components/schemas/Comment"),
      *          )
      *      )
      * )
      */
-    public function update(): array
+    public function update(Comment $comment, StoreCommentRequest $request): JsonResource
     {
-        return $this->commentService->updateComment();
+        if ($comment->user_id !== $request->user()->id) {
+            abort(403, 'Cannot update comment');
+        }
+
+        return $this->commentService->updateComment($comment, $request);
     }
 
     /**
-     * @OA\Delete(path="/posts/{post}/comments/{comment}",
+     * @OA\Delete(path="/comments/{comment}",
      *      tags={"Post"},
      *      summary="Удаление комментария",
      *      @OA\Response(response=200, description="Ответ",
@@ -75,8 +96,12 @@ class CommentController extends Controller
      *      )
      * )
      */
-    public function destroy(): array
+    public function destroy(Comment $comment, Request $request): array
     {
-        return $this->commentService->destroyComment();
+        if ($comment->user_id !== $request->user()->id) {
+            abort(403, 'Cannot delete comment');
+        }
+
+        return $this->commentService->destroyComment($comment);
     }
 }
