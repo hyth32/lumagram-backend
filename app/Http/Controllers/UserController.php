@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Application\DTOs\User\ProfileDto;
 use Application\Interfaces\Controllers\IUserController;
+use Application\Interfaces\Services\IPostService;
 use Application\Interfaces\Services\IUserService;
+use Application\Requests\BaseListRequest;
 use Application\Requests\User\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,7 +15,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class UserController extends Controller implements IUserController
 {
     public function __construct(
-        private readonly IUserService $userService
+        private readonly IUserService $userService,
+        private readonly IPostService $postService,
     ) {}
 
     /**
@@ -78,5 +81,23 @@ class UserController extends Controller implements IUserController
     public function activities(Request $request): array
     {
         return $this->userService->listActivities($request);
+    }
+
+    /**
+     * @OA\Get(path="/users/{user}/posts",
+     *      tags={"Open"},
+     *      summary="Список постов пользователя",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="posts", type="array", @OA\Items(ref="#/components/schemas/Post"))
+     *              ),
+     *          )
+     *      )
+     * )
+     */
+    public function getPosts(User $user, BaseListRequest $request): array
+    {
+        return $this->postService->getList($request, $user);
     }
 }

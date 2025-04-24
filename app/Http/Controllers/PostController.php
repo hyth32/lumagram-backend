@@ -51,7 +51,6 @@ class PostController extends Controller implements IPostController
      */
     public function store(StorePostRequest $request): array
     {
-        \Log::info($request->cookies->all());
         $dto = PostDto::fromRequest($request);
         return $this->postService->storePost($request->user(), $dto);
     }

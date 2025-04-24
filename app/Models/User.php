@@ -32,6 +32,11 @@ class User extends Authenticatable
         static::creating(fn (self $model) => $model->id = (string) Str::uuid());
     }
 
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
     public function profile()
     {
         return $this->hasOne(UserProfile::class);

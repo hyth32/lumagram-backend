@@ -8,7 +8,7 @@ use Application\Requests\BaseListRequest;
 
 interface IPostService
 {
-    public function getList(BaseListRequest $request): array;
+    public function getList(BaseListRequest $request, ?User $user = null): array;
 
     public function storePost(User $user, PostDto $dto): array;
 

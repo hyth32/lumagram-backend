@@ -12,7 +12,7 @@ class PostResource extends JsonResource
     {
         return [
             'user' => ProfileResource::make($this->user->profile),
-            'image' => ImageResource::make($this->image),
+            'image' => $this->image->storage_url,
             'description' => $this->description,
         ];
     }

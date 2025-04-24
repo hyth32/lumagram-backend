@@ -17,9 +17,13 @@ class PostService implements IPostService
         private readonly IImageService $imageService,
     ) {}
 
-    public function getList(BaseListRequest $request): array
+    public function getList(BaseListRequest $request, ?User $user = null): array
     {
-        $postsQuery = Post::query()->orderByDesc('created_at');
+        if ($user) {
+            $postsQuery = $user->posts()->latest();
+        } else {
+            $postsQuery = Post::query()->latest();
+        }
 
         $posts = $postsQuery->offset($request->input('offset'))->limit($request->input('limit'))->get();
 

@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(schema="Post", description="Пост", properties={
+ *      @OA\Property(property="image", type="string", description="URL изображения"),
+ *      @OA\Property(property="description", type="string", description="Описание поста"),
+ * })
+ */
 class Post extends Model
 {
     use HasUuids;
