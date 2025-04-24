@@ -7,7 +7,6 @@ use App\Models\Post;
 use Application\DTOs\Post\PostDto;
 use Application\Requests\BaseListRequest;
 use Application\Requests\Post\StorePostRequest;
-use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

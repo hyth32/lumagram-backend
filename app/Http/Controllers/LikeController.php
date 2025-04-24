@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\LikeService;
+use App\Models\Post;
+use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
@@ -16,14 +18,16 @@ class LikeController extends Controller
      *      summary="Список пользователей, лайкнувших пост",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="users", type="array", @OA\Items(ref="#/components/schemas/UserShort")),
+     *              ),
      *          )
      *      )
      * )
      */
-    public function index(): array
+    public function index(Post $post): array
     {
-        return $this->likeService->getList();
+        return $this->likeService->getList($post);
     }
 
     /**
@@ -37,8 +41,8 @@ class LikeController extends Controller
      *      )
      * )
      */
-    public function toggle(): array
+    public function toggle(Post $post, Request $request): array
     {
-        return $this->likeService->storeToggle();
+        return $this->likeService->storeToggle($post, $request->user());
     }
 }
