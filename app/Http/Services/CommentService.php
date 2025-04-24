@@ -2,9 +2,7 @@
 
 namespace App\Http\Services;
 
-use Application\Interfaces\Services\ICommentService;
-
-class CommentService implements ICommentService
+class CommentService
 {
     public function getList(): array
     {

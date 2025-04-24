@@ -5,10 +5,9 @@ namespace App\Http\Services;
 use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
-use Application\Interfaces\Services\IImageService;
 use Illuminate\Support\Facades\Storage;
 
-class ImageService implements IImageService
+class ImageService
 {
     public function upload(UploadedFile $image, string $path): ?Image
     {

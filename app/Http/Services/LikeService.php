@@ -2,9 +2,7 @@
 
 namespace App\Http\Services;
 
-use Application\Interfaces\Services\ILikeService;
-
-class LikeService implements ILikeService
+class LikeService
 {
     public function getList(): array
     {

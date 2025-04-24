@@ -2,19 +2,18 @@
 
 namespace App\Http\Services;
 
-use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
 use Application\DTOs\Post\PostDto;
 use Illuminate\Support\Facades\DB;
+use App\Http\Services\ImageService;
+use App\Http\Resources\PostResource;
 use Application\Requests\BaseListRequest;
-use Application\Interfaces\Services\IPostService;
-use Application\Interfaces\Services\IImageService;
 
-class PostService implements IPostService
+class PostService
 {
     public function __construct(
-        private readonly IImageService $imageService,
+        private readonly ImageService $imageService,
     ) {}
 
     public function getList(BaseListRequest $request, ?User $user = null): array

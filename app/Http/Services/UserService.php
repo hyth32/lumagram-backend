@@ -2,20 +2,19 @@
 
 namespace App\Http\Services;
 
-use App\Http\Resources\ActivityResource;
-use App\Http\Resources\ProfileResource;
-use App\Models\Activity;
 use App\Models\User;
-use Application\DTOs\User\ProfileDto;
-use Application\Interfaces\Services\IImageService;
-use Application\Interfaces\Services\IUserService;
+use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Http\Services\ImageService;
+use Application\DTOs\User\ProfileDto;
+use App\Http\Resources\ProfileResource;
+use App\Http\Resources\ActivityResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserService implements IUserService
+class UserService
 {
     public function __construct(
-        private readonly IImageService $imageService,
+        private readonly ImageService $imageService,
     ) {}
 
     public function getProfile(User $user): JsonResource
