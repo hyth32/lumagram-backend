@@ -44,7 +44,7 @@ class UserController extends Controller
      *                  @OA\Property(property="image", type="file", description="Аватарка пользователя"),
      *                  @OA\Property(property="name", type="string", description="Имя"),
      *                  @OA\Property(property="description", type="string", description="Описание"),
-     *                  @OA\Property(property="activityCategory", type="file", description="Категория активности"),
+     *                  @OA\Property(property="activityCategory", type="string", description="Категория активности"),
      *                  @OA\Property(property="isPublic", type="boolean", description="Метка открытости профиля"),
      *              ),
      *          ),
