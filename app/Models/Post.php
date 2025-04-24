@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @OA\Schema(schema="Post", description="Пост", properties={
+ *      @OA\Property(property="id", type="string", description="ID поста"),
+ *      @OA\Property(property="user", type="object", ref="#/components/schemas/UserShort", description="Пользователь, опубликовавший пост"),
  *      @OA\Property(property="image", type="string", description="URL изображения"),
  *      @OA\Property(property="description", type="string", description="Описание поста"),
+ *      @OA\Property(property="publishedAt", type="string", format="date-time", description="ISO метка публикации"),
+ *      @OA\Property(property="likeCount", type="integer", description="Количество лайков"),
+ *      @OA\Property(property="commentCount", type="integer", description="Количество комментариев"),
  * })
  */
 class Post extends Model

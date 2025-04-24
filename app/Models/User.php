@@ -10,6 +10,22 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @OA\Schema(schema="User", description="Профиль", properties={
+ *      @OA\Property(property="username", type="string", description="Юзернейм"),
+ *      @OA\Property(property="name", type="string", description="Имя"),
+ *      @OA\Property(property="description", type="string", description="Описание"),
+ *      @OA\Property(property="activityCategory", type="string", description="Категория активности"),
+ *      @OA\Property(property="isPublic", type="boolean", description="Метка публичности профиля"),
+ *      @OA\Property(property="image", type="string", description="URL изображения"),
+ *      @OA\Property(property="postsCount", type="integer", description="Количество публикаций"),
+ * })
+ * 
+ * @OA\Schema(schema="UserShort", description="Профиль", properties={
+ *      @OA\Property(property="username", type="string", description="Юзернейм"),
+ *      @OA\Property(property="image", type="string", description="URL изображения"),
+ * })
+ */
 class User extends Authenticatable
 {
     use HasUuids, SoftDeletes, HasApiTokens, Notifiable;

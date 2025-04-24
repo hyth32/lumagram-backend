@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\PostService;
+use App\Models\Post;
 use Application\DTOs\Post\PostDto;
 use Application\Requests\BaseListRequest;
 use Application\Requests\Post\StorePostRequest;
+use ErrorException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostController extends Controller
 {
@@ -19,7 +23,9 @@ class PostController extends Controller
      *      summary="Список постов",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="posts", type="array", @OA\Items(ref="#/components/schemas/Post"))
+     *              ),
      *          )
      *      ),
      * )
@@ -43,7 +49,7 @@ class PostController extends Controller
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(ref="#/components/schemas/Post"),
      *          )
      *      )
      * )
@@ -60,14 +66,14 @@ class PostController extends Controller
      *      summary="Получение поста",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(ref="#/components/schemas/Post"),
      *          )
      *      )
      * )
      */
-    public function show(): array
+    public function show(Post $post): JsonResource
     {
-        return $this->postService->showPost();
+        return $this->postService->showPost($post);
     }
 
     /**
@@ -81,8 +87,12 @@ class PostController extends Controller
      *      )
      * )
      */
-    public function destroy(): array
+    public function destroy(Post $post, Request $request): array
     {
-        return $this->postService->destroyPost();
+        if (!$request->user()->posts()->where('id', $post->id)->exists()) {
+            abort(403, 'Cannot delete post');
+        }
+        
+        return $this->postService->destroyPost($post);
     }
 }

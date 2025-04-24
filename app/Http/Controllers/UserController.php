@@ -24,7 +24,7 @@ class UserController extends Controller
      *      summary="Профиль пользователя",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(ref="#/components/schemas/User"),
      *          )
      *      )
      * )
@@ -51,12 +51,12 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(ref="#/components/schemas/User"),
      *          )
      *      )
      * )
      */
-    public function update(UpdateProfileRequest $request): array
+    public function update(UpdateProfileRequest $request): JsonResource
     {
         $dto = ProfileDto::fromRequest($request);
         return $this->userService->updateProfile($request->user(), $dto);

@@ -22,12 +22,12 @@ class UserService
         return ProfileResource::make($user->profile);
     }
 
-    public function updateProfile(User $user, ProfileDto $dto): array
+    public function updateProfile(User $user, ProfileDto $dto): JsonResource
     {
         $imagePath = "users/$user->username/profile";
         $image = $this->imageService->upload($dto->image, $imagePath);
 
-        $user->profile()->updateOrCreate([
+        $profile = $user->profile()->updateOrCreate([
             'name' => $dto->name,
             'description' => $dto->description,
             'activity_category' => $dto->activity_category,
@@ -35,7 +35,7 @@ class UserService
             'image_id' => $image->id,
         ]);
 
-        return [];
+        return ProfileResource::make($profile);
     }
 
     public function listActivities(Request $request): array

@@ -46,7 +46,7 @@ class AuthService
         }
 
         return [
-            'userId' => $user->id,
+            'username' => $user->username,
             'timestamp' => now(),
             ...$user->createTokens($dto->remember_me),
         ];
@@ -87,7 +87,7 @@ class AuthService
             }
         );
 
-        return ['sent' => $status === Password::PASSWORD_RESET];
+        return [];
     }
 
     public function changeUserPassword(ChangePasswordRequest $request): array

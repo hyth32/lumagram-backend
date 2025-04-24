@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Services\ImageService;
 use App\Http\Resources\PostResource;
 use Application\Requests\BaseListRequest;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostService
 {
@@ -35,22 +36,26 @@ class PostService
             $imagePath = "users/$user->username/posts";
             $image = $this->imageService->upload($dto->image, $imagePath);
 
-            $user->posts()->create([
+            $post = $user->posts()->create([
                 'image_id' => $image->id,
                 'description' => $dto->description,
             ]);
+
+            return PostResource::make($post);
         });
 
         return [];
     }
 
-    public function showPost(): array
+    public function showPost(Post $post): JsonResource
     {
-        return [];
+        return PostResource::make($post);
     }
 
-    public function destroyPost(): array
+    public function destroyPost(Post $post): array
     {
+        $post->delete();
+        
         return [];
     }
 }

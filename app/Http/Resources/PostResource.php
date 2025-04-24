@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\ProfileResource;
+use App\Http\Resources\ProfileShortResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
@@ -11,9 +11,13 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'user' => ProfileResource::make($this->user->profile),
+            'id' => $this->id,
+            'user' => ProfileShortResource::make($this->user->profile),
             'image' => $this->image->storage_url,
             'description' => $this->description,
+            'publishedAt' => $this->created_at,
+            'likeCount' => null,
+            'commentCount' => null,
         ];
     }
 }

@@ -24,12 +24,21 @@ class AuthController extends Controller
      *      summary="Регистрация",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Юзернейм"),
+     *                  @OA\Property(property="email", type="string", format="email", description="Email"),
+     *                  @OA\Property(property="password", type="string", description="Пароль"),
+     *              ),
      *          )
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Юзернейм"),
+     *                  @OA\Property(property="timestamp", type="string", format="date-time", description="Временная метка"),
+     *                  @OA\Property(property="accessToken", type="string", description="Access-токен"),
+     *                  @OA\Property(property="refreshToken", type="string", description="Refresh-токен"),
+     *              ),
      *          )
      *      )
      * )
@@ -51,12 +60,21 @@ class AuthController extends Controller
      *      summary="Вход",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Юзернейм"),
+     *                  @OA\Property(property="password", type="string", description="Пароль"),
+     *                  @OA\Property(property="rememberMe", type="boolean", description="Метка 'Запомнить меня'"),
+     *              ),
      *          )
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Юзернейм"),
+     *                  @OA\Property(property="timestamp", type="string", format="date-time", description="Временная метка"),
+     *                  @OA\Property(property="accessToken", type="string", description="Access-токен"),
+     *                  @OA\Property(property="refreshToken", type="string", description="Refresh-токен"),
+     *              ),
      *          )
      *      )
      * )
@@ -99,12 +117,17 @@ class AuthController extends Controller
      *      summary="Запрос на сброс пароля",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Юзернейм"),
+     *                  @OA\Property(property="email", type="string", format="email", description="Email"),
+     *              ),
      *          )
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="sent", type="boolean", description="Метка статуса отправки сообщения"),
+    *               ),
      *          )
      *      )
      * )
@@ -120,7 +143,11 @@ class AuthController extends Controller
      *      summary="Обновление пароля после сброса",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="email", type="string", format="email", description="Email"),
+     *                  @OA\Property(property="token", type="string", description="Токен восстановления"),
+     *                  @OA\Property(property="password", type="string", description="Пароль"),
+     *              ),
      *          )
      *      ),
      *      @OA\Response(response=200, description="Ответ",
@@ -141,7 +168,9 @@ class AuthController extends Controller
      *      summary="Смена пароля",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="password", type="string", description="Новый пароль"),
+     *              ),
      *          )
      *      ),
      *      @OA\Response(response=200, description="Ответ",
@@ -167,7 +196,9 @@ class AuthController extends Controller
      *      ),
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(),
+     *              @OA\Schema(
+     *                  @OA\Property(property="accessToken", type="string", description="Access-токен"),
+     *              ),
      *          )
      *      )
      * )
