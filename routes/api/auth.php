@@ -24,3 +24,7 @@ Route::get('/csrf-token', function () {
         'csrf_token' => csrf_token(),
     ];
 });
+
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->noContent();
+});
