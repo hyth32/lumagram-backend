@@ -16,7 +16,7 @@ class PostResource extends JsonResource
             'image' => $this->image->storage_url,
             'description' => $this->description,
             'publishedAt' => $this->created_at,
-            'likeCount' => null,
+            'likeCount' => $this->likes()->count(),
             'commentCount' => null,
         ];
     }
