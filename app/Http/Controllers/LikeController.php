@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Application\Interfaces\Controllers\ILikeController;
-use Application\Interfaces\Services\ILikeService;
+use App\Http\Services\LikeService;
 
-class LikeController extends Controller implements ILikeController
+class LikeController extends Controller
 {
     public function __construct(
-        private readonly ILikeService $likeService,
+        private readonly LikeService $likeService,
     ) {}
 
     /**

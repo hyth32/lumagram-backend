@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\PostService;
 use Application\DTOs\Post\PostDto;
 use Application\Requests\BaseListRequest;
 use Application\Requests\Post\StorePostRequest;
-use Application\Interfaces\Services\IPostService;
-use Application\Interfaces\Controllers\IPostController;
 
-class PostController extends Controller implements IPostController
+class PostController extends Controller
 {
     public function __construct(
-        private readonly IPostService $postService,
+        private readonly PostService $postService,
     ) {}
 
     /**

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Application\Interfaces\Controllers\ICommentController;
-use Application\Interfaces\Services\ICommentService;
+use App\Http\Services\CommentService;
 
-class CommentController extends Controller implements ICommentController
+class CommentController extends Controller
 {
     public function __construct(
-        private readonly ICommentService $commentService,
+        private readonly CommentService $commentService,
     ) {}
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Application\Interfaces\Controllers\IAuthController;
+use App\Http\Controllers\AuthController;
 
-Route::controller(IAuthController::class)->prefix('auth')->group(function () {
+Route::controller(AuthController::class)->prefix('auth')->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
     
@@ -13,7 +13,7 @@ Route::controller(IAuthController::class)->prefix('auth')->group(function () {
     Route::post('/refresh', 'refresh');
 });
 
-Route::controller(IAuthController::class)->middleware('auth:sanctum')->prefix('auth')->group(function () {
+Route::controller(AuthController::class)->middleware('auth:sanctum')->prefix('auth')->group(function () {
     Route::post('/logout', 'logout');
     
     Route::post('/change-password', 'changePassword');

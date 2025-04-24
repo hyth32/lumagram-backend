@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Services\AuthService;
 use Application\DTOs\Auth\LoginUserDto;
 use Application\DTOs\Auth\RegisterUserDto;
 use Application\Requests\Auth\LoginUserRequest;
-use Application\Interfaces\Services\IAuthService;
 use Application\Requests\Auth\RegisterUserRequest;
 use Application\Requests\Auth\ResetPasswordRequest;
 use Application\Requests\Auth\ChangePasswordRequest;
 use Application\Requests\Auth\ForgotPasswordRequest;
-use Application\Interfaces\Controllers\IAuthController;
 
-class AuthController extends Controller implements IAuthController
+class AuthController extends Controller
 {
     public function __construct(
-        private readonly IAuthService $authService
+        private readonly AuthService $authService
     ) {}
 
     /**

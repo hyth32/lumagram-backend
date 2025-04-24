@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Application\DTOs\User\ProfileDto;
-use Application\Interfaces\Controllers\IUserController;
-use Application\Interfaces\Services\IPostService;
-use Application\Interfaces\Services\IUserService;
-use Application\Requests\BaseListRequest;
-use Application\Requests\User\UpdateProfileRequest;
 use Illuminate\Http\Request;
+use App\Http\Services\PostService;
+use App\Http\Services\UserService;
+use Application\DTOs\User\ProfileDto;
+use Application\Requests\BaseListRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Application\Requests\User\UpdateProfileRequest;
 
-class UserController extends Controller implements IUserController
+class UserController extends Controller
 {
     public function __construct(
-        private readonly IUserService $userService,
-        private readonly IPostService $postService,
+        private readonly UserService $userService,
+        private readonly PostService $postService,
     ) {}
 
     /**
