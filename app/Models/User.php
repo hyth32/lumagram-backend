@@ -19,6 +19,8 @@ use Laravel\Sanctum\HasApiTokens;
  *      @OA\Property(property="isPublic", type="boolean", description="Метка публичности профиля"),
  *      @OA\Property(property="image", type="string", description="URL изображения"),
  *      @OA\Property(property="postsCount", type="integer", description="Количество публикаций"),
+ *      @OA\Property(property="followersCount", type="integer", description="Количество подписчиков"),
+ *      @OA\Property(property="followingCount", type="integer", description="Количество подписок"),
  * })
  * 
  * @OA\Schema(schema="UserShort", description="Профиль", properties={

@@ -38,7 +38,7 @@ class UserService
         return ProfileResource::make($profile);
     }
 
-    public function listActivities(Request $request): array
+    public function listActivities(): array
     {
         $activities = Activity::query()->get();
         return ['activities' => ActivityResource::collection($activities)];

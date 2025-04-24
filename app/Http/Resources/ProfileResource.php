@@ -17,6 +17,8 @@ class ProfileResource extends JsonResource
             'isPublic' => $this->is_public,
             'image' => ImageResource::make($this->avatar),
             'postsCount' => $this->user->posts()->count(),
+            'followersCount' => null,
+            'followingCount' => null,
         ];
     }
 }
