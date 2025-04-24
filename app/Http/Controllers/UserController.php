@@ -35,7 +35,7 @@ class UserController extends Controller
     }
 
     /**
-     * @OA\Put(path="/users/me",
+     * @OA\Put(path="/users/profile",
      *      tags={"User"},
      *      summary="Редактирование профиля",
      *      @OA\RequestBody(description="Запрос",
