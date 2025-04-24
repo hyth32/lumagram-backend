@@ -18,3 +18,9 @@ Route::controller(IAuthController::class)->middleware('auth:sanctum')->prefix('a
     
     Route::post('/change-password', 'changePassword');
 });
+
+Route::get('/csrf-token', function () {
+    return [
+        'csrf_token' => csrf_token(),
+    ];
+});
