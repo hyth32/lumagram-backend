@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->use([
+            \App\Http\Middleware\VerifyCsrfToken::class => false,
+        ]);
+
         $middleware->appendToGroup('api', [
             TrasformApiResponse::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
@@ -23,8 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \App\Http\Middleware\DisableCsrfForApi::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
