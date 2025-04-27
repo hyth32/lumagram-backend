@@ -20,11 +20,4 @@ class RegisterUserRequest extends FormRequest
             'password' => ['required', PasswordRules::defaults()],
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'username' => 'username',
-        ];
-    }
 }

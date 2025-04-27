@@ -36,13 +36,9 @@ class AuthService
     public function loginUser(LoginUserDto $dto): array
     {
         $user = User::where('username', $dto->username)->first();
-
-        if (!$user) {
-            throw new AuthorizationException('username');
-        }
         
         if (!Hash::check($dto->password, $user->password)) {
-            throw new AuthorizationException('password');
+            throw new AuthorizationException('Incorrect password');
         }
 
         return [

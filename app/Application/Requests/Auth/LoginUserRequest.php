@@ -23,7 +23,7 @@ class LoginUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'username' => 'username',
+            'username.exists' => 'User with this username was not found',
         ];
     }
 }

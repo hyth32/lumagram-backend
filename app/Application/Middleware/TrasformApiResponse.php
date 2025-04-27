@@ -4,7 +4,6 @@ namespace Application\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class TrasformApiResponse
@@ -21,7 +20,16 @@ class TrasformApiResponse
             if (isset($content['errors'])) {
                 $error = $this->processErrors($content['errors']);
             } else {
-                $error = [$content['message']];
+                $message = $content['message'] ?? 'Произошла ошибка';
+                $field = $content['field'] ?? $this->extractFieldFromMessage($message);
+                $error = [
+                    'fields' => [
+                        [
+                            'field' => $field,
+                            'message' => $message
+                        ]
+                    ]
+                ];
             }
         }
 
@@ -49,6 +57,41 @@ class TrasformApiResponse
 
     public function processErrors(array $errors)
     {
-        return collect($errors)->keys()->toArray();
+        $fields = [];
+        foreach ($errors as $field => $messages) {
+            if (is_array($messages)) {
+                $message = $messages[0] ?? 'Неверное значение';
+            } else {
+                $message = $messages;
+            }
+            
+            $fields[] = [
+                'field' => $field,
+                'message' => $message
+            ];
+        }
+
+        return [
+            'fields' => $fields
+        ];
+    }
+
+    private function extractFieldFromMessage(string $message): string
+    {
+        $fieldMap = [
+            'password' => ['password', 'пароль'],
+            'login' => ['login', 'логин'],
+            'email' => ['email', 'почта'],
+        ];
+
+        foreach ($fieldMap as $field => $keywords) {
+            foreach ($keywords as $keyword) {
+                if (stripos($message, $keyword) !== false) {
+                    return $field;
+                }
+            }
+        }
+
+        return 'general';
     }
 }
