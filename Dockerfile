@@ -24,21 +24,23 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
-# Copy existing application directory
-COPY . .
+# Copy composer files first
+COPY composer.json composer.lock ./
 
 # Install dependencies
-RUN composer install
+RUN composer install --no-scripts --no-autoloader
+
+# Copy the rest of the application
+COPY . .
+
+# Generate autoload files
+RUN composer dump-autoload --optimize
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www && \
+    chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # Expose port 9000
 EXPOSE 9000
-
-# Add Laravel specific commands
-RUN php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
 
 CMD ["php-fpm"] 
