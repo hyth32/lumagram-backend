@@ -99,4 +99,22 @@ class UserController extends Controller
     {
         return $this->postService->getList($request, $user);
     }
+
+    /**
+     * @OA\Get(path="/users/check",
+     *      tags={"User"},
+     *      summary="Проверка username",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Имя пользователя"),
+     *              ),
+     *          )
+     *      )
+     * )
+     */
+    public function check(Request $request): array
+    {
+        return $this->userService->checkUser($request);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Services\ImageService;
 use Application\DTOs\User\ProfileDto;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ActivityResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserService
@@ -41,5 +42,10 @@ class UserService
     {
         $activities = Activity::query()->get();
         return ['activities' => ActivityResource::collection($activities)];
+    }
+
+    public function checkUser(Request $request): array
+    {
+        return ['username' => $request->user()->username];
     }
 }

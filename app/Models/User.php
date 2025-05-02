@@ -89,7 +89,7 @@ class User extends Authenticatable
     {
         $expirationDate = $rememberMe
             ? now()->addWeek() // refresh
-            : now()->addDay(); // access
+            : now()->addMinutes(15); // access
 
         return [
             'accessToken' => $this->createAccessToken(),

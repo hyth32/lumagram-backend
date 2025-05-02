@@ -7,6 +7,8 @@ Route::controller(UserController::class)->middleware('auth:sanctum')->prefix('us
     Route::put('/profile', 'update');
     Route::get('/{user}/profile', 'profile');
     Route::get('/{user}/posts', 'getPosts');
+
+    Route::get('/check', 'check');
 });
 
 Route::controller(UserController::class)->prefix('open')->group(function () {
