@@ -8,7 +8,9 @@ use App\Http\Services\ImageService;
 use Application\DTOs\User\ProfileDto;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ActivityResource;
+use App\Models\Follower;
 use Application\DTOs\Image\ImageDto;
+use Application\Enums\FollowStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,6 +28,7 @@ class UserService
     public function updateProfile(User $user, ProfileDto $dto): JsonResource
     {
         $profile = $user->profile();
+        $isPublic = $profile->is_public;
         $profileData = [
             'name' => $dto->name,
             'description' => $dto->description,
@@ -37,6 +40,11 @@ class UserService
             $profile->create($profileData);
         } else {
             $profile->update($profileData);
+            if (!$isPublic && $dto->is_public) {
+                Follower::where('user_id', $user->id)
+                    ->where('status', FollowStatus::Pending->value)
+                    ->update(['status' => FollowStatus::Followed->value()]);
+            }
         }
 
         return ProfileResource::make($user->profile);
