@@ -97,14 +97,16 @@ class FollowController extends Controller
      *      summary="Список запросов на подписку",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/UserShort"),
+     *              @OA\Schema(
+     *                  @OA\Property(property="requests", type="array", @OA\Items(ref="#/components/schemas/UserShort")),
+     *              ),
      *          )
      *      )
      * )
      */
-    public function followRequests()
+    public function followRequests(BaseListRequest $request)
     {
-        return $this->followService->followRequestsIndex();
+        return $this->followService->followRequestsIndex($request);
     }
 
     /**
@@ -123,9 +125,9 @@ class FollowController extends Controller
      *      )
      * )
      */
-    public function approveFollowRequest()
+    public function approveFollowRequest(User $user, Request $request)
     {
-        return $this->followService->approveFollow();
+        return $this->followService->approveFollow($user, $request);
     }
 
     /**
@@ -144,8 +146,8 @@ class FollowController extends Controller
      *      )
      * )
      */
-    public function declineFollowRequest()
+    public function declineFollowRequest(User $user, Request $request)
     {
-        return $this->followService->declineFollow();
+        return $this->followService->declineFollow($user, $request);
     }
 }

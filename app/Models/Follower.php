@@ -62,16 +62,46 @@ class Follower extends Model
         if ($followerId == $subjectId) {
             return null;
         }
-
-        $followRecord = self::query()
-            ->where('user_id', $subjectId)
-            ->where('follower_id', $followerId)
-            ->first();
+        
+        $followRecord = self::findRecord($subjectId, $followerId)->first();
 
         if (empty($followRecord)) {
             return null;
         }
 
         return FollowStatus::getLabelFromValue($followRecord->status);
+    }
+
+    public static function findRecord(string $subjectId, string $followerId)
+    {
+        if ($followerId == $subjectId) {
+            return null;
+        }
+        
+        return self::where('user_id', $subjectId)->where('follower_id', $followerId);
+    }
+
+    public static function findFollowRecord(string $subjectId, string $followerId)
+    {
+        $followRecord = self::findRecord($subjectId, $followerId);
+        if (empty($followRecord)) {
+            return null;
+        }
+
+        return $followRecord
+            ->where('status', FollowStatus::Followed->value())
+            ->first();
+    }
+
+    public static function findPendingRecord(string $subjectId, string $followerId)
+    {
+        $followRecord = self::findRecord($subjectId, $followerId);
+        if (empty($followRecord)) {
+            return null;
+        }
+
+        return $followRecord
+            ->where('status', FollowStatus::Pending->value())
+            ->first();
     }
 }

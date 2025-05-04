@@ -28,7 +28,7 @@ class UserService
     public function updateProfile(User $user, ProfileDto $dto): JsonResource
     {
         $profile = $user->profile();
-        $isPublic = $profile->is_public;
+        $isPublic = $user->profile->is_public;
         $profileData = [
             'name' => $dto->name,
             'description' => $dto->description,

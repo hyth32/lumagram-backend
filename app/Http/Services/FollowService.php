@@ -54,18 +54,27 @@ class FollowService
         return ['following' => ProfileShortResource::collection($following)];
     }
 
-    public function followRequestsIndex()
+    public function followRequestsIndex(BaseListRequest $request)
     {
-        //
+        $requestsQuery = $request->user()->followers()->where('status', FollowStatus::Pending->value());
+        $requests = $requestsQuery->offset($request->input('offset'))->offset($request->input('offset'))->get();
+
+        return ['requests' => ProfileShortResource::collection($requests)];
     }
 
-    public function approveFollow()
+    public function approveFollow(User $user, Request $request)
     {
-        //
+        $requestRecord = Follower::findPendingRecord($request->user()->id, $user->id);
+        if (!empty($requestRecord)) {
+            $requestRecord->update(['status' => FollowStatus::Followed->value()]);
+        }
     }
 
-    public function declineFollow()
+    public function declineFollow(User $user, Request $request)
     {
-        //
+        $requestRecord = Follower::findPendingRecord($request->user()->id, $user->id);
+        if (!empty($requestRecord)) {
+            $requestRecord->delete();
+        }
     }
 }
