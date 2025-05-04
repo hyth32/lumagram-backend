@@ -27,12 +27,6 @@ use Laravel\Sanctum\HasApiTokens;
  *      @OA\Property(property="username", type="string", description="Юзернейм"),
  *      @OA\Property(property="image", type="string", description="URL изображения"),
  * })
- * 
- * @OA\Schema(schema="Follower", description="Подписчик", properties={
- *      @OA\Property(property="username", type="string", description="Юзернейм"),
- *      @OA\Property(property="image", type="string", description="URL изображения"),
- *      @OA\Property(property="isFollowing", type="boolean", description="Метка подписки на подписчика"),
- * })
  */
 class User extends Authenticatable
 {

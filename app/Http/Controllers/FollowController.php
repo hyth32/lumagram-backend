@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\FollowService;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Application\Requests\BaseListRequest;
 
 class FollowController extends Controller
 {
@@ -26,9 +29,9 @@ class FollowController extends Controller
      *      )
      * )
      */
-    public function follow()
+    public function follow(User $user, Request $request)
     {
-        return $this->followService->followUser();
+        return $this->followService->followUser($user, $request);
     }
 
     /**
@@ -47,9 +50,9 @@ class FollowController extends Controller
      *      )
      * )
      */
-    public function unfollow()
+    public function unfollow(User $user, Request $request)
     {
-        return $this->followService->unfollowUser();
+        return $this->followService->unfollowUser($user, $request);
     }
 
     /**
@@ -58,14 +61,16 @@ class FollowController extends Controller
      *      summary="Список подписчиков",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/Follower"),
+     *              @OA\Schema(
+     *                  @OA\Property(property="followers", type="array", @OA\Items(ref="#/components/schemas/Follower")),
+     *              ),
      *          )
      *      )
      * )
      */
-    public function followers()
+    public function followers(User $user, BaseListRequest $request)
     {
-        return $this->followService->followersIndex();
+        return $this->followService->followersIndex($user, $request);
     }
 
     /**
@@ -74,14 +79,16 @@ class FollowController extends Controller
      *      summary="Список подписок",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/UserShort"),
+     *              @OA\Schema(
+     *                  @OA\Property(property="following", type="array", @OA\Items(ref="#/components/schemas/UserShort")),
+     *              ),
      *          )
      *      )
      * )
      */
-    public function following()
+    public function following(User $user, BaseListRequest $request)
     {
-        return $this->followService->followingIndex();
+        return $this->followService->followingIndex($user, $request);
     }
 
     /**
