@@ -8,6 +8,7 @@ use App\Http\Services\ImageService;
 use Application\DTOs\User\ProfileDto;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ActivityResource;
+use Application\DTOs\Image\ImageDto;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,18 +25,30 @@ class UserService
 
     public function updateProfile(User $user, ProfileDto $dto): JsonResource
     {
-        $imagePath = "users/$user->username/profile";
-        $image = $this->imageService->upload($dto->image, $imagePath);
-
         $profile = $user->profile()->updateOrCreate([
             'name' => $dto->name,
             'description' => $dto->description,
             'activity_category' => $dto->activity_category,
             'is_public' => $dto->is_public,
-            'image_id' => $image->id,
         ]);
 
         return ProfileResource::make($profile);
+    }
+
+    public function updateUsername(User $user, string $username): JsonResource
+    {
+        $user->update(['username' => $username]);
+        return ProfileResource::make($user->profile);
+    }
+
+    public function updateAvatarImage(User $user, ImageDto $dto): JsonResource
+    {
+        $imagePath = "users/$user->username/profile";
+        $image = $this->imageService->upload($dto->image, $imagePath);
+        
+        $user->profile()->update(['image_id' => $image->id]);
+
+        return ProfileResource::make($user->profile);
     }
 
     public function listActivities(): array

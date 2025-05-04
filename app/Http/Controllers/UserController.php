@@ -6,10 +6,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Services\PostService;
 use App\Http\Services\UserService;
+use Application\DTOs\Image\ImageDto;
 use Application\DTOs\User\ProfileDto;
 use Application\Requests\BaseListRequest;
+use Application\Requests\Image\SaveImageRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Application\Requests\User\UpdateProfileRequest;
+use Application\Requests\User\UpdateUsernameRequest;
 
 class UserController extends Controller
 {
@@ -60,6 +63,54 @@ class UserController extends Controller
     {
         $dto = ProfileDto::fromRequest($request);
         return $this->userService->updateProfile($request->user(), $dto);
+    }
+
+    /**
+     * @OA\Put(path="/users/profile/change-username",
+     *      tags={"User"},
+     *      summary="Редактирование профиля",
+     *      @OA\RequestBody(description="Запрос",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="username", type="string", description="Имя пользователя"),
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/User"),
+     *          )
+     *      )
+     * )
+     */
+    public function updateUsername(UpdateUsernameRequest $request): JsonResource
+    {
+        $username = $request->validated()['username'];
+        return $this->userService->updateUsername($request->user(), $username);
+    }
+
+    /**
+     * @OA\Put(path="/users/profile/change-image",
+     *      tags={"User"},
+     *      summary="Редактирование профиля",
+     *      @OA\RequestBody(description="Запрос",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="image", type="file", description="Аватарка пользователя"),
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/User"),
+     *          )
+     *      )
+     * )
+     */
+    public function updateImage(SaveImageRequest $request)
+    {
+        $dto = ImageDto::fromRequest($request);
+        return $this->userService->updateAvatarImage($request->user(), $dto);
     }
 
     /**

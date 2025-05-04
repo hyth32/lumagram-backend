@@ -4,7 +4,7 @@ namespace Application\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfileRequest extends FormRequest
+class UpdateUsernameRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,10 +14,7 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string',
-            'description' => 'nullable|string',
-            'activityCategory' => 'nullable|string',
-            'isPublic' => 'required|boolean',
+            'username' => 'required|string|unique:users,username',
         ];
     }
 }
