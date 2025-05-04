@@ -39,4 +39,14 @@ class Follower extends Model
     {
         return $this->belongsTo(User::class, 'follower_id');
     }
+
+    public static function getFollowersCount(string $userId): int
+    {
+        return self::where('user_id', $userId)->count();
+    }
+
+    public static function getFollowingCount(string $userId): int
+    {
+        return self::where('follower_id', $userId)->count();
+    }
 }

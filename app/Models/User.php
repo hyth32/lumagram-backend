@@ -21,6 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  *      @OA\Property(property="postsCount", type="integer", description="Количество публикаций"),
  *      @OA\Property(property="followersCount", type="integer", description="Количество подписчиков"),
  *      @OA\Property(property="followingCount", type="integer", description="Количество подписок"),
+ *      @OA\Property(property="isFollowing", type="boolean", description="Метка подписки на пользователя"),
  * })
  * 
  * @OA\Schema(schema="UserShort", description="Профиль", properties={
@@ -106,5 +107,15 @@ class User extends Authenticatable
     public function setPassword(string $password)
     {
         return $this->forceFill(['password' => Hash::make($password)]);
+    }
+
+    public function getFollowersCountAttribute()
+    {
+        return Follower::getFollowersCount($this->id);
+    }
+
+    public function getFollowingCountAttribute()
+    {
+        return Follower::getFollowingCount($this->id);
     }
 }
