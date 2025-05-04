@@ -26,6 +26,7 @@ WORKDIR /var/www
 
 # Copy composer files first
 COPY composer.json composer.lock ./
+COPY update.sh ./update.sh
 
 # Install dependencies
 RUN composer install --no-scripts --no-autoloader
@@ -36,11 +37,11 @@ COPY . .
 # Generate autoload files
 RUN composer dump-autoload --optimize
 
+RUN chmod +x update.sh
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # Expose port 9000
 EXPOSE 9000
-
-CMD ["php-fpm"] 
