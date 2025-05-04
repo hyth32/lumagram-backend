@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Follower;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\User;
@@ -13,9 +14,7 @@ class ProfileResource extends JsonResource
         $requestUser = $request->user();
         $user = User::where('username', $this->user->username)->first();
 
-        $isFollowing = $requestUser->username == $user->username
-            ? (bool) $user->followers()->where('follower_id', $requestUser->id)->exists()
-            : null;
+        $followingStatus = Follower::getFollowingStatus($user->id, $requestUser->id);
 
         return [
             'username' => $this->user->username,
@@ -27,7 +26,7 @@ class ProfileResource extends JsonResource
             'postsCount' => $this->user->posts()->count(),
             'followersCount' => $this->user->followers_count,
             'followingCount' => $this->user->following_count,
-            'isFollowing' => $isFollowing,
+            'followingStatus' => $followingStatus,
         ];
     }
 }

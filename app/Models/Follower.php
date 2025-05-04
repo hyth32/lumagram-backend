@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Application\Enums\FollowStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
  * @OA\Schema(schema="Follower", description="Подписчик", properties={
  *      @OA\Property(property="username", type="string", description="Юзернейм"),
  *      @OA\Property(property="image", type="string", description="URL изображения"),
- *      @OA\Property(property="isFollowing", type="boolean", description="Метка подписки на подписчика"),
+ *      @OA\Property(property="followingStatus", type="string", description="Статус подписки на подписчика"),
  * })
  */
 class Follower extends Model
@@ -42,11 +43,35 @@ class Follower extends Model
 
     public static function getFollowersCount(string $userId): int
     {
-        return self::where('user_id', $userId)->count();
+        return self::query()
+            ->where('user_id', $userId)
+            ->where('status', FollowStatus::Followed->value())
+            ->count();
     }
 
     public static function getFollowingCount(string $userId): int
     {
-        return self::where('follower_id', $userId)->count();
+        return self::query()
+            ->where('follower_id', $userId)
+            ->where('status', FollowStatus::Followed->value())
+            ->count();
+    }
+
+    public static function getFollowingStatus(string $subjectId, string $followerId)
+    {
+        if ($followerId == $subjectId) {
+            return null;
+        }
+
+        $followRecord = self::query()
+            ->where('user_id', $subjectId)
+            ->where('follower_id', $followerId)
+            ->first();
+
+        if (empty($followRecord)) {
+            return null;
+        }
+
+        return FollowStatus::getLabelFromValue($followRecord->status);
     }
 }

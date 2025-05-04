@@ -21,7 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  *      @OA\Property(property="postsCount", type="integer", description="Количество публикаций"),
  *      @OA\Property(property="followersCount", type="integer", description="Количество подписчиков"),
  *      @OA\Property(property="followingCount", type="integer", description="Количество подписок"),
- *      @OA\Property(property="isFollowing", type="boolean", description="Метка подписки на пользователя"),
+ *      @OA\Property(property="followingStatus", type="string", description="Статус подписки на пользователя"),
  * })
  * 
  * @OA\Schema(schema="UserShort", description="Профиль", properties={
