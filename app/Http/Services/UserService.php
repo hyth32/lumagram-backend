@@ -25,19 +25,27 @@ class UserService
 
     public function updateProfile(User $user, ProfileDto $dto): JsonResource
     {
-        $profile = $user->profile()->updateOrCreate([
+        $profile = $user->profile();
+        $profileData = [
             'name' => $dto->name,
             'description' => $dto->description,
             'activity_category' => $dto->activity_category,
             'is_public' => $dto->is_public,
-        ]);
+        ];
 
-        return ProfileResource::make($profile);
+        if (!$profile->exists()) {
+            $profile->create($profileData);
+        } else {
+            $profile->update($profileData);
+        }
+
+        return ProfileResource::make($user->profile);
     }
 
     public function updateUsername(User $user, string $username): JsonResource
     {
         $user->update(['username' => $username]);
+
         return ProfileResource::make($user->profile);
     }
 
