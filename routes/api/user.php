@@ -8,6 +8,7 @@ Route::controller(UserController::class)->middleware('auth:sanctum')->prefix('us
     Route::put('/profile', 'update');
     Route::put('/profile/change-username', 'updateUsername');
     Route::put('/profile/change-image', 'updateImage');
+    Route::delete('/profile/delete-image', 'deleteImage');
 
     Route::get('/{user}/profile', 'profile');
     Route::get('/{user}/posts', 'getPosts');

@@ -114,6 +114,22 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Delete(path="/users/profile/delete-image",
+     *      tags={"User"},
+     *      summary="Удаление аватарки",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/User"),
+     *          )
+     *      )
+     * )
+     */
+    public function deleteImage(Request $request)
+    {
+        return $this->userService->deleteAvatar($request->user());
+    }
+
+    /**
      * @OA\Get(path="/open/activities",
      *      tags={"Open"},
      *      summary="Категории активности",

@@ -67,6 +67,11 @@ class UserService
         return ProfileResource::make($user->profile);
     }
 
+    public function deleteAvatar(User $user)
+    {
+        $user->profile->avatar()->delete();
+    }
+
     public function listActivities(): array
     {
         $activities = Activity::query()->get();
