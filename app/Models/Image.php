@@ -7,6 +7,14 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @OA\Schema(schema="Image", description="Изображение", properties={
+ *      @OA\Property(property="mime", type="string", description="Mime тип"),
+ *      @OA\Property(property="width", type="integer", description="Ширина изображения"),
+ *      @OA\Property(property="height", type="integer", description="Высота изображения"),
+ *      @OA\Property(property="url", type="string", description="URL изображения"),
+ * })
+ */
 class Image extends Model
 {
     use HasUuids;

@@ -92,7 +92,7 @@ class UserController extends Controller
     /**
      * @OA\Put(path="/users/profile/change-image",
      *      tags={"User"},
-     *      summary="Редактирование профиля",
+     *      summary="Редактирование аватарки профиля",
      *      @OA\RequestBody(description="Запрос",
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(

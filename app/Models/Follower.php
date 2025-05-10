@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  * @OA\Schema(schema="Follower", description="Подписчик", properties={
  *      @OA\Property(property="username", type="string", description="Юзернейм"),
- *      @OA\Property(property="image", type="string", description="URL изображения"),
+ *      @OA\Property(property="image", type="object", ref="#/components/schemas/Image", description="Изображение"),
  *      @OA\Property(property="followingStatus", type="string", description="Статус подписки на подписчика"),
  * })
  */

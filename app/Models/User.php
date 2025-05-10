@@ -17,7 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
  *      @OA\Property(property="description", type="string", description="Описание"),
  *      @OA\Property(property="activityCategory", type="string", description="Категория активности"),
  *      @OA\Property(property="isPublic", type="boolean", description="Метка публичности профиля"),
- *      @OA\Property(property="image", type="string", description="URL изображения"),
+ *      @OA\Property(property="image", type="object", ref="#/components/schemas/Image", description="Изображение"),
  *      @OA\Property(property="postsCount", type="integer", description="Количество публикаций"),
  *      @OA\Property(property="followersCount", type="integer", description="Количество подписчиков"),
  *      @OA\Property(property="followingCount", type="integer", description="Количество подписок"),
@@ -26,7 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
  * 
  * @OA\Schema(schema="UserShort", description="Профиль", properties={
  *      @OA\Property(property="username", type="string", description="Юзернейм"),
- *      @OA\Property(property="image", type="string", description="URL изображения"),
+ *      @OA\Property(property="image", type="object", ref="#/components/schemas/Image", description="Изображение"),
  * })
  */
 class User extends Authenticatable
