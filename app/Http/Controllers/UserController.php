@@ -151,7 +151,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(path="/users/{user}/posts",
-     *      tags={"Open"},
+     *      tags={"User"},
      *      summary="Список постов пользователя",
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
