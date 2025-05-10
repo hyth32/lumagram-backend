@@ -17,7 +17,7 @@ class PostController extends Controller
     ) {}
 
     /**
-     * @OA\Get(path="/posts",
+     * @OA\Get(path="/feed",
      *      tags={"Post"},
      *      summary="Список постов",
      *      @OA\Response(response=200, description="Ответ",
@@ -32,6 +32,24 @@ class PostController extends Controller
     public function index(BaseListRequest $request): array
     {
         return $this->postService->getList($request);
+    }
+
+    /**
+     * @OA\Get(path="/feed/following",
+     *      tags={"Post"},
+     *      summary="Список постов подписок",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="posts", type="array", @OA\Items(ref="#/components/schemas/Post"))
+     *              ),
+     *          )
+     *      ),
+     * )
+     */
+    public function indexFollowing(BaseListRequest $request): array
+    {
+        return $this->postService->getFollowingList($request, $request->user());
     }
 
     /**

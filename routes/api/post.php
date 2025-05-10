@@ -13,6 +13,7 @@ Route::controller(PostController::class)->middleware('auth:sanctum')->group(func
     });
 
     Route::get('/feed', 'index');
+    Route::get('/feed/following', 'indexFollowing');
 });
 
 Route::controller(LikeController::class)->middleware('auth:sanctum')->prefix('posts')->group(function () {

@@ -81,6 +81,11 @@ class User extends Authenticatable
         return $this->hasMany(Follower::class, 'user_id');
     }
 
+    public function following()
+    {
+        return $this->hasMany(Follower::class, 'follower_id');
+    }
+
     public function createAccessToken(): string
     {
         return $this->createToken('access-token', ['*'], now()->addDay())->plainTextToken;

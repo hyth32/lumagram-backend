@@ -8,6 +8,7 @@ use Application\DTOs\Post\PostDto;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\ImageService;
 use App\Http\Resources\PostResource;
+use Application\Enums\FollowStatus;
 use Application\Requests\BaseListRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,6 +27,15 @@ class PostService
         }
 
         $posts = $postsQuery->offset($request->input('offset'))->limit($request->input('limit'))->get();
+
+        return ['posts' => PostResource::collection($posts)];
+    }
+
+    public function getFollowingList(BaseListRequest $request, User $user)
+    {
+        $userIds = $user->following()->where('status', FollowStatus::Followed->value())->with('user', fn ($q) => $q->whereHas('posts'))->pluck('user_id');
+        $postsQuery = Post::whereIn('user_id', $userIds)->latest();
+        $posts = $postsQuery->offset($request->offset)->limit($request->limit)->get();
 
         return ['posts' => PostResource::collection($posts)];
     }
