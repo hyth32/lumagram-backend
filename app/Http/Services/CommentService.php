@@ -7,7 +7,6 @@ use App\Models\Comment;
 use App\Models\Post;
 use Application\Requests\BaseListRequest;
 use Application\Requests\Comment\StoreCommentRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentService

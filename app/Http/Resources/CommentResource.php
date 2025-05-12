@@ -11,7 +11,7 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => ProfileShortResource::make($this->user),
+            'user' => ProfileShortResource::make($this->user->profile),
             'text' => $this->text,
             'createdAt' => $this->created_at,
             'isEdited' => $this->is_edited,
