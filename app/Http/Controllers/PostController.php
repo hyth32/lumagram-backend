@@ -71,7 +71,7 @@ class PostController extends Controller
      *      )
      * )
      */
-    public function store(StorePostRequest $request): array
+    public function store(StorePostRequest $request): JsonResource
     {
         $dto = PostDto::fromRequest($request);
         return $this->postService->storePost($request->user(), $dto);

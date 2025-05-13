@@ -40,21 +40,17 @@ class PostService
         return ['posts' => PostResource::collection($posts)];
     }
 
-    public function storePost(User $user, PostDto $dto): array
+    public function storePost(User $user, PostDto $dto): JsonResource
     {
-        DB::transaction(function () use ($user, $dto) {
-            $imagePath = "users/$user->username/posts";
-            $image = $this->imageService->upload($dto->image, $imagePath);
+        $imagePath = "users/$user->username/posts";
+        $image = $this->imageService->upload($dto->image, $imagePath);
 
-            $post = $user->posts()->create([
-                'image_id' => $image->id,
-                'description' => $dto->description,
-            ]);
+        $post = $user->posts()->create([
+            'image_id' => $image->id,
+            'description' => $dto->description,
+        ]);
 
-            return PostResource::make($post);
-        });
-
-        return [];
+        return PostResource::make($post);
     }
 
     public function showPost(Post $post): JsonResource
