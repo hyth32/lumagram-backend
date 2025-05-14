@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BaseSearchRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Services\PostService;
@@ -20,6 +21,22 @@ class UserController extends Controller
         private readonly UserService $userService,
         private readonly PostService $postService,
     ) {}
+
+    /**
+     * @OA\Get(path="/users",
+     *      tags={"User"},
+     *      summary="Список пользователей",
+     *      @OA\Response(response=200, description="Ответ",
+     *          @OA\MediaType(mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/UserShort"),
+     *          )
+     *      )
+     * )
+     */
+    public function list(BaseSearchRequest $request): array
+    {
+        return $this->userService->listUsers($request);
+    }
 
     /**
      * @OA\Get(path="/users/{user}/profile",

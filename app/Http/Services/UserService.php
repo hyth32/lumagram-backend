@@ -2,12 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Http\Requests\BaseSearchRequest;
 use App\Models\User;
 use App\Models\Activity;
 use App\Http\Services\ImageService;
 use Application\DTOs\User\ProfileDto;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ActivityResource;
+use App\Http\Resources\UserShortResource;
 use App\Models\Follower;
 use Application\DTOs\Image\ImageDto;
 use Application\Enums\FollowStatus;
@@ -19,6 +21,18 @@ class UserService
     public function __construct(
         private readonly ImageService $imageService,
     ) {}
+
+    public function listUsers(BaseSearchRequest $request): array
+    {
+        $usersQuery = User::query()
+            ->when(!empty($request->searchQuery), fn ($query) =>
+                $query->where('username', 'ilike', '%' . $request->searchQuery . '%'),
+            );
+
+        $users = $usersQuery->offset($request->offset)->limit($request->limit)->get();
+
+        return ['users' => UserShortResource::collection($users)];
+    }
 
     public function getProfile(User $user): JsonResource
     {
