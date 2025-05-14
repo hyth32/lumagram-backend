@@ -15,6 +15,7 @@ enum FollowStatus
         return match($this) {
             self::Pending => 0,
             self::Followed => 1,
+            self::NotFollowed => 2,
         };
     }
 
