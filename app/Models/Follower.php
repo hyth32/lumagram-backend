@@ -66,7 +66,7 @@ class Follower extends Model
         $followRecord = self::findRecord($subjectId, $followerId)->first();
 
         if (empty($followRecord)) {
-            return null;
+            return FollowStatus::NotFollowed->label();
         }
 
         return FollowStatus::getLabelFromValue($followRecord->status);

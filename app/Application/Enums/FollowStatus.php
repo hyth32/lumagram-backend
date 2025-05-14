@@ -6,6 +6,7 @@ enum FollowStatus
 {
     use EnumTrait;
 
+    case NotFollowed;
     case Pending;
     case Followed;
 
@@ -22,6 +23,7 @@ enum FollowStatus
         return match($this) {
             self::Pending => 'pending',
             self::Followed => 'followed',
+            self::NotFollowed => 'notFollowed'
         };
     }
 }
