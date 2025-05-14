@@ -13,7 +13,7 @@ class CommentService
 {
     public function getList(Post $post, BaseListRequest $request): array
     {
-        $commentQuery = $post->comments();
+        $commentQuery = $post->comments()->latest();
         $comments = $commentQuery->offset($request->input('offset'))->limit($request->input('limit'))->get();
 
         return ['comments' => CommentResource::collection($comments)];
