@@ -26,6 +26,10 @@ class UserController extends Controller
      * @OA\Get(path="/users",
      *      tags={"User"},
      *      summary="Список пользователей",
+     *      @OA\Parameter(name="offset", @OA\Schema(type="integer"), in="query"),
+     *      @OA\Parameter(name="limit", @OA\Schema(type="integer"), in="query"),
+     *      @OA\Parameter(name="searchQuery", @OA\Schema(type="string"), in="query"),
+     * 
      *      @OA\Response(response=200, description="Ответ",
      *          @OA\MediaType(mediaType="application/json",
      *              @OA\Schema(ref="#/components/schemas/UserShort"),
